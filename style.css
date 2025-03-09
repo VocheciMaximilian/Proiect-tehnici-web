@@ -1,0 +1,68 @@
+:root {
+    --spacing-large: 40px;
+    --spacing-medium: 20px;
+    --spacing-small: 10px;
+    --padding-text: 15px;
+    --background-light: #ff9800;
+    --background-dark: #000000;
+    --text-color: #333;
+    --border-radius: 10px;
+}
+
+body {
+    background-color: var(--background-light);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header, footer {
+    background-color: var(--background-dark);
+    color: white;
+    padding: var(--padding-text);
+    margin: 0;
+    width: 100vw;
+}
+
+section {
+    background-color: var(--background-light);
+    padding: var(--padding-text);
+    margin: 0;
+}
+
+nav ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: var(--spacing-small);
+    padding: 0;
+    list-style: none;
+}
+
+h1, h2, h3, p {
+    margin: var(--padding-text) 0;
+}
+
+img, iframe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 600px;
+    min-width: 200px;
+    background-color: var(--background-light);
+}
+
+figure {
+    margin: 0;
+    padding: var(--padding-text);
+    background-color: var(--background-light);
+    text-align: center;
+}
+
+footer {
+    background-color: var(--background-dark);
+    color: white;
+    text-align: center;
+    padding: var(--padding-text);
+}
