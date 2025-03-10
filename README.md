@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/e8451ba2-f047-41e2-adfd-dc71f5c19d73)# Proiect-tehnici-web
+# Proiect-tehnici-web
 1. Alegerea temei
 Tema proiectului este un site de retete culinare care permite utilizatorilor sa vizualizeze si sa
 incarce retete. Site-ul va avea functionalitati precum sortare, filtrare si statistici.
@@ -48,6 +48,7 @@ folosit pentru a modera retetele si utilizatorii
 - Despre noi: pagina cu informatii despre site
 - Contact: pagina pentru a contacta administratorul site-ului, poate fi
 folosit pentru a oferii sugestii sau pentru a raporta probleme.
+![image](https://github.com/user-attachments/assets/e8451ba2-f047-41e2-adfd-dc71f5c19d73)
 4. Stabilirea cuvintelor/sintagmelor cheie
 Cuvinte cheie pentru site:
 - Retete culinare
