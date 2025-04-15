@@ -1,6 +1,6 @@
 @use "sass:color";
 
-// Mixin pentru tranziții – reutilizabil
+// Mixin pentru tranzitii - reutilizabil
 @mixin transition($args...) {
   transition: $args;
 }
@@ -31,7 +31,7 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-// Setări generale pentru html și body
+// Setari generale pentru html si body
 html, body {
   margin: 0;
   padding: 0;
@@ -75,7 +75,7 @@ $hover-overlay: rgba(255, 255, 255, 0.3);
 $submenu-bg: color.adjust($menu-bg, $lightness: -5%);
 $submenu-transition: 0.3s;
 
-// Stiluri pentru header și nav
+// Stiluri pentru header si nav
 header {
   width: 100%;
   padding: var(--padding-text);
@@ -332,7 +332,7 @@ nav {
   }
 }
 
-// Stiluri pentru secțiuni și elemente media
+// Stiluri pentru sectiuni si elemente media
 section {
   background-color: var(--background-light);
   padding: var(--padding-text);
