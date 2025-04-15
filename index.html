@@ -4,18 +4,27 @@
     <meta charset="UTF-8">
     <meta name="author" content="Vocheci Maximilian">
     <meta name="keywords" content="retete culinare, gatit usor, retete populare, mancare, retete rapide">
-    <meta name="description" content="Site pentru retete de gatit pe palcul pofticiosiilor.">
+    <meta name="description" content="Site pentru retete de gatit pe placul pofticiosilor.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Găteală.com.ro</title>
-    <link rel="stylesheet" href="style.css">
     <meta name="msapplication-TileColor" content="#ffffff">
     <link rel="icon" type="image/png" href="/images/chef-hat.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/images/chef-hat.svg" />
     <link rel="shortcut icon" href="/images/chef-hat.png" type="image/x-icon" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/chef-hat.png" />
     <link rel="manifest" href="/images/site.webmanifest" />
-    <!-- font extern -->
+
+    <!-- Font extern -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome pentru iconițe -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-Fo3rlrZj/k7ujTnH2N2h2XqjsmEPU/3JU8U9N7IQH6Y+Y0Jtt5Bx06Vd3S6nQ3lZUA9xn/3HJHN+rzR3W3Vyw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Fișierul CSS compilat din Sass -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,24 +32,49 @@
 <header>
     <h1>Găteală</h1>
     <nav>
-        <ul>
-            <li><a href="#zona1">Acasă</a></li>
-            <li><a href="#zona1">Rețete</a></li>
-            <li><a href="#populare">Rețete Populare</a></li>
-            <li><a href="#rapide">Rețete Rapide</a></li>
-            <li><a href="#autentificare">Autentificare / Înregistrare</a></li>
-            <li><a href="#despre">Despre noi</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="menu-container">
+            <!-- Butonul Hamburger pentru ecrane mici -->
+            <div class="menu-trigger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="menu">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i> <span>Acasă</span>
+                    </a>
+                </li>
+                <!-- Submeniu: Rețete -->
+                <li class="has-submenu">
+                    <a href="#">Rețete</a>
+                    <ul class="submenu">
+                        <li><a href="aperitive.html">Aperitive</a></li>
+                        <li><a href="feluri-principale.html">Feluri Principale</a></li>
+                        <li><a href="deserturi.html">Deserturi</a></li>
+                    </ul>
+                </li>
+                <li><a href="#populare">Rețete Populare</a></li>
+                <li><a href="#rapide">Rețete Rapide</a></li>
+                <li><a href="#autentificare">Autentificare / Înregistrare</a></li>
+                <!-- Submeniu: Informații -->
+                <li class="has-submenu">
+                    <a href="#">Informații</a>
+                    <ul class="submenu">
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#despre">Despre noi</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
-<!--layout -->
-<main class="layout-grid">
 
-    <!-- Grid Area: ZONA 1 (Acasă / Rețete) -->
+<!-- Layout principal: Grid cu secțiuni -->
+<main class="layout-grid">
+    <!-- ZONA 1: Rețete -->
     <section id="zona1">
         <h2>Rețete</h2>
-
         <!-- Aperitive -->
         <article>
             <h3>Aperitive</h3>
@@ -84,7 +118,7 @@
         </article>
     </section>
 
-    <!-- ZONA 2 -->
+    <!-- ZONA 2: Tabel cu 10 Rețete -->
     <section id="zona2">
         <h2>Tabel cu 10 Rețete</h2>
         <table>
@@ -173,7 +207,7 @@
         </table>
     </section>
 
-    <!-- ZONA 3-->
+    <!-- ZONA 3: Calendar Evenimente -->
     <section id="zona3">
         <h2>Calendar Evenimente</h2>
         <table>
@@ -215,32 +249,36 @@
         </table>
     </section>
 
-    <!-- ZONA 4 -->
+    <!-- ZONA 4: Anunțuri -->
     <section id="zona4">
         <h2>Anunțuri</h2>
+        <p>Aici puteți găsi ultimele anunțuri legate de site și evenimente.</p>
     </section>
 
-    <!-- ZONA 5 -->
+    <!-- ZONA 5: Utilizatori Online -->
     <section id="zona5">
         <h2>Utilizatori Online</h2>
+        <p>Numărul de utilizatori conectați în acest moment: 42</p>
     </section>
 
-    <!-- ZONA 6-->
+    <!-- ZONA 6: Date despre utilizator si statistici -->
     <section id="zona6">
         <h2>Date despre utilizator și statistici</h2>
+        <p>Aici sunt afișate câteva date și statistici despre utilizatori și activitatea site-ului.</p>
     </section>
 
-    <!-- ZONA 7 -->
+    <!-- ZONA 7: Date despre site si server -->
     <section id="zona7">
         <h2>Date despre site și server</h2>
+        <p>Informații tehnice despre server, uptime și alte detalii relevante.</p>
     </section>
 
-    <!-- ZONA 8 momentan o sa am restul continutului din etapa 1 aici-->
+    <!-- ZONA 8: Secțiuni interne -->
     <section id="zona8">
         <!-- #populare -->
         <section id="populare">
             <h3>Rețete Populare</h3>
-            <p>Aici găsești cele mai apreciate rețete de pe site din toate categoriile.</p>
+            <p>Aici găsești cele mai apreciate rețete din toate categoriile.</p>
             <iframe class="video-frame"
                     name="videoFrame"
                     src="https://www.youtube.com/embed/dQw4w9WgXcQ"
@@ -261,7 +299,7 @@
         <!-- #autentificare -->
         <section id="autentificare">
             <h3>Autentificare / Înregistrare</h3>
-            <p>Conectează-te pentru a te bucura de toate funcționalitățile site-ului.</p>
+            <p>Conectează-te pentru a beneficia de toate funcționalitățile site-ului.</p>
         </section>
 
         <!-- #despre -->
@@ -288,20 +326,31 @@
             </iframe>
         </section>
     </section>
-
 </main>
 
 <!-- Footer -->
 <footer>
+    <p class="banner-print">Acesta este un proiect școlar!</p>
     <small>&copy; 2025 Găteală. Toate drepturile rezervate.</small>
 </footer>
 
-<!-- Buton "Back to Top"  -->
+<!-- Buton "Back to Top" -->
 <a href="#top" class="btn-top" data-tooltip="Începutul paginii">
     <div class="diamond">
         <div class="triangle"></div>
     </div>
 </a>
+
+<!-- pentru hamburger -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const trigger = document.querySelector('.menu-trigger');
+        const menu = document.querySelector('.menu');
+        trigger.addEventListener('click', function () {
+            menu.classList.toggle('active');
+        });
+    });
+</script>
 
 </body>
 </html>
