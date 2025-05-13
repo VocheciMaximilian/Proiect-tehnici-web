@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ro">
+<%- include('../fragmente/head', { titluPagina: 'Acasă – Găteală' }) %>
+<body>
+<%- include('../fragmente/header') %>
+
+<main class="layout-grid">
+    <!-- ZONA 1: Rețete -->
+    <section id="zona1">
+        <h2>Rețete</h2>
+
+        <!-- Aperitive -->
+        <article>
+            <h3>Aperitive</h3>
+            <p>Gustări ușor de preparat pentru orice ocazie.</p>
+            <figure>
+                <picture>
+                    <source srcset="/resurse/images/12387.jpg" media="(max-width: 600px)">
+                    <source srcset="/resurse/images/12387(1).jpg" media="(max-width: 1200px)">
+                    <img src="/resurse/images/12387(2).jpg" alt="Aperitive delicioase">
+                </picture>
+                <figcaption>Platou de aperitive variate pentru orice ocazie.</figcaption>
+            </figure>
+        </article>
+
+        <!-- Feluri Principale -->
+        <article>
+            <h3>Feluri Principale</h3>
+            <p>Rețete delicioase și variate pentru mesele principale ale zilei.</p>
+            <figure>
+                <picture>
+                    <source srcset="/resurse/images/19956.jpg" media="(max-width: 600px)">
+                    <source srcset="/resurse/images/19956(1).jpg" media="(max-width: 1200px)">
+                    <img src="/resurse/images/19956(2).jpg" alt="Feluri principale consistente">
+                </picture>
+                <figcaption>Mâncăruri sățioase și gustoase pentru mesele principale.</figcaption>
+            </figure>
+        </article>
+
+        <!-- Deserturi -->
+        <article>
+            <h3>Deserturi</h3>
+            <p>Înveselește-ți ziua cu deserturi savuroase.</p>
+            <figure>
+                <picture>
+                    <source srcset="/resurse/images/14508.jpg" media="(max-width: 600px)">
+                    <source srcset="/resurse/images/14508(1).jpg" media="(max-width: 1200px)">
+                    <img src="/resurse/images/14508(2).jpg" alt="Deserturi dulci și aromate">
+                </picture>
+                <figcaption>Prăjituri, tarte și alte dulciuri perfecte pentru orice moment.</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <!-- ZONA 2: Tabel cu 10 Rețete -->
+    <section id="zona2">
+        <h2>Tabel cu 10 Rețete</h2>
+        <table>
+            <caption>Recomandări Găteală</caption>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nume Rețetă</th>
+                <th>Categorie</th>
+                <th>Timp (min)</th>
+                <th>Observații</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>1</td><td>Bruschete cu roșii</td><td>Aperitive</td><td>15</td><td>Se servesc calde</td></tr>
+            <tr><td>2</td><td>Salată de vinete</td><td>Aperitive</td><td>20</td><td>Se poate congela</td></tr>
+            <tr><td>3</td><td>Tocăniță de pui</td><td>Feluri Principale</td><td>45</td><td>Poate fi picantă</td></tr>
+            <tr><td>4</td><td>Friptură de porc la cuptor</td><td>Feluri Principale</td><td>60</td><td>Se marinează înainte</td></tr>
+            <tr><td>5</td><td>Cheesecake cu fructe</td><td>Desert</td><td>30</td><td>Rapid și răcoros</td></tr>
+            <tr><td>6</td><td>Clătite cu ciocolată</td><td>Desert</td><td>20</td><td>Pentru toate vârstele</td></tr>
+            <tr><td>7</td><td>Omletă cu legume</td><td>Rapide</td><td>10</td><td>Ideală pentru mic dejun</td></tr>
+            <tr><td>8</td><td>Sandviș cu șuncă și cașcaval</td><td>Rapide</td><td>5</td><td>Perfect pentru gustare</td></tr>
+            <tr><td>9</td><td>Sarmale tradiționale</td><td>Populare</td><td>90</td><td>Se servesc cu smântână</td></tr>
+            <tr><td>10</td><td>Mici la grătar</td><td>Populare</td><td>15</td><td>Nelipsiți la grătar</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ZONA 3: Calendar Evenimente -->
+    <section id="zona3">
+        <h2>Calendar Evenimente</h2>
+        <table>
+            <caption>Aprilie – Mai (Evenimente)</caption>
+            <thead><tr><th>Luna</th><th>Data</th><th>Eveniment</th></tr></thead>
+            <tbody>
+            <tr><td>Aprilie</td><td>21</td><td>Floriile</td></tr>
+            <tr><td>Aprilie</td><td>28</td><td>Vinerea Mare</td></tr>
+            <tr><td>Aprilie</td><td>29</td><td>Sâmbăta Mare</td></tr>
+            <tr><td>Aprilie</td><td>30</td><td>Paște Ortodox</td></tr>
+            <tr><td>Mai</td><td>01</td><td>A doua zi de Paște</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ZONA 4: Anunțuri -->
+    <section id="zona4">
+        <h2>Anunțuri</h2>
+        <p>Aici puteți găsi ultimele anunțuri legate de site și evenimente.</p>
+    </section>
+
+    <!-- ZONA 5: Utilizatori Online -->
+    <section id="zona5">
+        <h2>Utilizatori Online</h2>
+        <p>Numărul de utilizatori conectați în acest moment: 42</p>
+    </section>
+
+    <!-- ZONA 6: Date despre utilizator și statistici -->
+    <section id="zona6">
+        <h2>Date despre utilizator și statistici</h2>
+        <p>IP-ul tău: <%= ip %></p>
+    </section>
+
+    <!-- ZONA 7: Date despre site și server -->
+    <section id="zona7">
+        <h2>Date despre site și server</h2>
+        <p>Informații tehnice despre server, uptime și alte detalii relevante.</p>
+    </section>
+
+    <!-- ZONA 8: Secțiuni interne -->
+    <section id="zona8">
+    </section>
+</main>
+
+<%- include('../fragmente/footer') %>
+</body>
+</html>
+

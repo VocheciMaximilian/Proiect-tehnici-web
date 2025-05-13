@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ro">
+<%- include('../fragmente/head', { titluPagina: 'Video cu Subtitrări' }) %>
+<body>
+<%- include('../fragmente/header') %>
+<main>
+    <section class="video-container">
+        <h2>Videoclip: Ciorbă de lobodă roșie și măcriș</h2>
+        <video
+                poster="/resurse/images/Video/poster.jpg"
+                controls
+                preload="metadata"
+        >
+            <source
+                    src="/resurse/images/Video/Ciorba_de_loboda_rosie_si_macris.webm"
+                    type="video/webm"
+            >
+            <source
+                    src="/resurse/images/Video/Ciorba_de_loboda_rosie_si_macris.mp4"
+                    type="video/mp4"
+            >
+
+            <track
+                    kind="subtitles"
+                    label="Română"
+                    srclang="ro"
+                    src="/resurse/images/Video/sub-ro.vtt"
+                    default
+            >
+            <track
+                    kind="subtitles"
+                    label="English"
+                    srclang="en"
+                    src="/resurse/images/Video/sub-en.vtt"
+            >
+            Browserul tău nu suportă elementul video.
+        </video>
+
+        <p>
+            <a
+                    href="https://youtu.be/Z1rZCiBKD-o?si=8oZ9zXwe01ZMsS7t"
+                    target="_blank"
+                    rel="noopener"
+            >
+                Urmărește videoclipul original pe YouTube
+            </a>
+        </p>
+    </section>
+</main>
+<%- include('../fragmente/footer') %>
+</body>
+</html>

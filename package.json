@@ -1,5 +1,31 @@
 {
+  "name": "gateala",
+  "version": "1.0.0",
+  "description": "Site pentru retete de gatit pe placul pofticiosilor",
+  "author": "Vocheci Maximilian",
+  "keywords": [
+    "retete culinare",
+    "gatit usor",
+    "retete rapide"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "build-css": "sass Resurse/Stiluri/style.scss Resurse/Stiluri/style.css",
+    "watch-css": "sass --watch Resurse/Stiluri/style.scss:Resurse/Stiluri/style.css",
+    "start": "node index.js"
+  },
   "dependencies": {
-    "sass": "^1.86.3"
-  }
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "sass": "^1.88.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VocheciMaximilian/Proiect-tehnici-web.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VocheciMaximilian/Proiect-tehnici-web/issues"
+  },
+  "homepage": "https://github.com/VocheciMaximilian/Proiect-tehnici-web#readme"
 }
