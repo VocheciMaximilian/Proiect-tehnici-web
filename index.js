@@ -8,6 +8,10 @@ const PORT = process.env.PORT || 8080;
 // Globale
 const obGlobal = { obErori: null };
 
+global.folderScss = path.join(__dirname, 'Resurse', 'Stiluri');
+global.folderCss = path.join(__dirname, 'Resurse', 'Stiluri');
+global.folderBackup = path.join(global.folderCss, 'backup');
+
 // Inițializare erori
 function initErori() {
     const eroriRaw = fs.readFileSync(path.join(__dirname, 'erori.json'), 'utf-8');

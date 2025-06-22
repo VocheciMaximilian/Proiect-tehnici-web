@@ -1,5 +1,14 @@
 @use "sass:color";
-
+$primary: #9B59B6;
+$secondary: #2ECC71;
+$border-radius: 0.2rem;
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+// Font-ul
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+body {
+  // Acest stil va fi aplicat
+  background-color: #f0f2f5;
+}
 // Mixin pentru tranzitii - reutilizabil
 @mixin transition($args...) {
   transition: $args;

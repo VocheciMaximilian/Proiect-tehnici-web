@@ -15,9 +15,11 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "bootstrap": "^5.3.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "sass": "^1.88.0"
+    "nodemon": "^3.1.10",
+    "sass": "^1.89.2"
   },
   "repository": {
     "type": "git",
