@@ -1,112 +1,356 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" id="top">
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="Vocheci Maximilian">
     <meta name="keywords" content="retete culinare, gatit usor, retete populare, mancare, retete rapide">
-    <meta name="description" content="Site pentru retete de gatit pe palcul pofticiosiilor.">
+    <meta name="description" content="Site pentru retete de gatit pe placul pofticiosilor.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Găteală.com.ro</title>
-    <link rel="stylesheet" href="style.css">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <link rel="icon" type="image/png" href="/images/chef-hat.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/images/chef-hat.svg" />
-    <link rel="shortcut icon" href="/images/chef-hat.png" type="image/x-icon" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/chef-hat.png" />
-    <link rel="manifest" href="/images/site.webmanifest" />
+    <link rel="icon" type="image/png" href="/Resurse/images/chef-hat.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/Resurse/images/chef-hat.svg" />
+    <link rel="shortcut icon" href="/Resurse/images/chef-hat.png" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/Resurse/images/chef-hat.png" />
+    <link rel="manifest" href="/Resurse/images/site.webmanifest" />
+
+    <!-- Font extern -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome pentru iconite -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-Fo3rlrZj/k7ujTnH2N2h2XqjsmEPU/3JU8U9N7IQH6Y+Y0Jtt5Bx06Vd3S6nQ3lZUA9xn/3HJHN+rzR3W3Vyw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Fisierul CSS compilat din Sass -->
+    <link rel="stylesheet" href="Resurse/Stiluri/style.css">
 </head>
 <body>
+
 <header>
-    <h1> Găteală </h1>
+    <h1>Găteală</h1>
     <nav>
-        <ul>
-            <li><a href="#">Acasa</a></li>
-            <li><a href="#retete">Retete</a></li>
-            <li><a href="#populare">Retete Populare</a></li>
-            <li><a href="#rapide">Retete Rapide</a></li>
-            <li><a href="#autentificare">Autentificare / Inregistrare</a></li>
-            <li><a href="#despre">Despre noi</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="menu-container">
+            <!-- Butonul Hamburger pentru ecrane mici -->
+            <div class="menu-trigger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="menu">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i> <span>Acasă</span>
+                    </a>
+                </li>
+                <!-- Submeniu: Retete -->
+                <li class="has-submenu">
+                    <a href="#">Retete</a>
+                    <ul class="submenu">
+                        <li><a href="aperitive.html">Aperitive</a></li>
+                        <li><a href="feluri-principale.html">Feluri Principale</a></li>
+                        <li><a href="deserturi.html">Deserturi</a></li>
+                    </ul>
+                </li>
+                <li><a href="#populare">Retete Populare</a></li>
+                <li><a href="#rapide">Retete Rapide</a></li>
+                <li><a href="#autentificare">Autentificare / Înregistrare</a></li>
+                <!-- Submeniu: Informatii -->
+                <li class="has-submenu">
+                    <a href="#">Informatii</a>
+                    <ul class="submenu">
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#despre">Despre noi</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
-<main>
-    <section id="retete">
+
+<!-- Layout principal: Grid cu sectiuni -->
+<main class="layout-grid">
+    <!-- ZONA 1: Retete -->
+    <section id="zona1">
         <h2>Retete</h2>
+        <!-- Aperitive -->
         <article>
             <h3>Aperitive</h3>
             <p>Gustari usor de preparat pentru orice ocazie.</p>
             <figure>
                 <picture>
-                    <source srcset="/images/12387.jpg" media="(max-width: 600px)">
-                    <source srcset="/images/12387(1).jpg" media="(max-width: 1200px)">
-                    <img src="/images/12387(2).jpg" alt="Aperitive delicioase">
+                    <source srcset="/Resurse/images/12387.jpg" media="(max-width: 600px)">
+                    <source srcset="/Resurse/images/12387(1).jpg" media="(max-width: 1200px)">
+                    <img src="/Resurse/images/12387(2).jpg" alt="Aperitive delicioase">
                 </picture>
                 <figcaption>Platou de aperitive variate pentru orice ocazie.</figcaption>
             </figure>
         </article>
+
+        <!-- Feluri Principale -->
         <article>
             <h3>Feluri Principale</h3>
             <p>Retete delicioase si variate pentru mesele principale ale zilei.</p>
             <figure>
                 <picture>
-                    <source srcset="/images/19956.jpg" media="(max-width: 600px)">
-                    <source srcset="/images/19956(1).jpg" media="(max-width: 1200px)">
-                    <img src="/images/19956(2).jpg" alt="Feluri principale consistente">
+                    <source srcset="/Resurse/images/19956.jpg" media="(max-width: 600px)">
+                    <source srcset="/Resurse/images/19956(1).jpg" media="(max-width: 1200px)">
+                    <img src="/Resurse/images/19956(2).jpg" alt="Feluri principale consistente">
                 </picture>
                 <figcaption>Mancaruri satioase si gustoase pentru mesele principale.</figcaption>
             </figure>
         </article>
+
+        <!-- Deserturi -->
         <article>
             <h3>Deserturi</h3>
-            <p>Inveseleste-ti ziua cu deserturi savuroase.</p>
+            <p>Inveselește-ti ziua cu deserturi savuroase.</p>
             <figure>
                 <picture>
-                    <source srcset="/images/14508.jpg" media="(max-width: 600px)">
-                    <source srcset="/images/14508(1).jpg" media="(max-width: 1200px)">
-                    <img src="/images/14508(2).jpg" alt="Deserturi dulci si aromate">
+                    <source srcset="/Resurse/images/14508.jpg" media="(max-width: 600px)">
+                    <source srcset="/Resurse/images/14508(1).jpg" media="(max-width: 1200px)">
+                    <img src="/Resurse/images/14508(2).jpg" alt="Deserturi dulci si aromate">
                 </picture>
-            <figcaption>Prajituri, tarte si alte dulciuri perfecte pentru orice moment.</figcaption>
+                <figcaption>Prajituri, tarte si alte dulciuri perfecte pentru orice moment.</figcaption>
             </figure>
         </article>
     </section>
-    <section id="populare">
-        <h2>Retete Populare</h2>
-        <p>Aici gasesti cele mai apreciate retete de pe site din toate categoriile.</p>
-        <iframe name="videoFrame" width="100" height="400" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
 
-        <p>Vizualizeaza videoclipuri despre retetele noastre populare:</p>
-        <a href="https://youtu.be/zR1slAT13MQ?si=DHVnzwDSH8UBIZBi" target="videoFrame">Video 1: Reteta de paste carbonara</a><br>
-        <a href="https://youtu.be/Iqy7KsFgMHc?si=OU1hVwH7424yy5WZ" target="videoFrame">Video 2: Alta reteta de paste carbonara</a><br>
+    <!-- ZONA 2: Tabel cu 10 Retete -->
+    <section id="zona2">
+        <h2>Tabel cu 10 Retete</h2>
+        <table>
+            <caption>Recomandarile Găteală</caption>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nume Reteta</th>
+                <th>Categorie</th>
+                <th>Timp (min)</th>
+                <th>Observatii</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Bruschete cu rosii</td>
+                <td>Aperitive</td>
+                <td>15</td>
+                <td>Se servesc calde</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Salata de vinete</td>
+                <td>Aperitive</td>
+                <td>20</td>
+                <td>Se poate congela</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Tocanita de pui</td>
+                <td>Feluri Principale</td>
+                <td>45</td>
+                <td>Poate fi picanta</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Friptura de porc la cuptor</td>
+                <td>Feluri Principale</td>
+                <td>60</td>
+                <td>Se marineaza inainte</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Cheesecake cu fructe</td>
+                <td>Desert</td>
+                <td>30</td>
+                <td>Rapid si racoros</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Clatite cu ciocolata</td>
+                <td>Desert</td>
+                <td>20</td>
+                <td>Pentru toate varstele</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Omleta cu legume</td>
+                <td>Rapide</td>
+                <td>10</td>
+                <td>Ideala pentru mic dejun</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Sandvis cu sunca si cascaval</td>
+                <td>Rapide</td>
+                <td>5</td>
+                <td>Perfect pentru gustare</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Sarmale traditionale</td>
+                <td>Populare</td>
+                <td>90</td>
+                <td>Se servesc cu smantana</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Mici la gratar</td>
+                <td>Populare</td>
+                <td>15</td>
+                <td>Nelipsiti la gratar</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
 
+    <!-- ZONA 3: Calendar Evenimente -->
+    <section id="zona3">
+        <h2>Calendar Evenimente</h2>
+        <table>
+            <caption>Aprilie - Mai (Evenimente)</caption>
+            <thead>
+            <tr>
+                <th>Luna</th>
+                <th>Data</th>
+                <th>Eveniment</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Aprilie</td>
+                <td>21</td>
+                <td>Floriile</td>
+            </tr>
+            <tr>
+                <td>Aprilie</td>
+                <td>28</td>
+                <td>Vinerea Mare</td>
+            </tr>
+            <tr>
+                <td>Aprilie</td>
+                <td>29</td>
+                <td>Sambata Mare</td>
+            </tr>
+            <tr>
+                <td>Aprilie</td>
+                <td>30</td>
+                <td>Paste Ortodox</td>
+            </tr>
+            <tr>
+                <td>Mai</td>
+                <td>01</td>
+                <td>A doua zi de Paste</td>
+            </tr>
+            </tbody>
+        </table>
     </section>
-    <section id="rapide">
-        <h2>Retete Rapide</h2>
-        <p>Retete gata in mai putin de 30 de minute, ideale pentru zilele aglomerate.</p>
+
+    <!-- ZONA 4: Anunturi -->
+    <section id="zona4">
+        <h2>Anunturi</h2>
+        <p>Aici puteti gasi ultimele anunturi legate de site si evenimente.</p>
     </section>
-    <section id="autentificare">
-        <h2>Autentificare / Inregistrare</h2>
-        <p>Conecteaza-te pentru a te bucura de toate functionalitati-le site-ului.</p>
+
+    <!-- ZONA 5: Utilizatori Online -->
+    <section id="zona5">
+        <h2>Utilizatori Online</h2>
+        <p>Numarul de utilizatori conectati in acest moment: 42</p>
     </section>
-    <section id="despre">
-        <h2>Despre noi</h2>
-        <p>Site-ul <strong>Găteală</strong> este un proiect de laborator pentru materia de la facultate Tehnici Web.</p>
-        <p>Site-ul are rol strict  educational si il folosesc pentru a invata sa lucrez in html, css, javascript si cateva framework-uri.</p>
-        <p>  <strong> Găteală nu este menit pentru uz comercial sau castig monetar.</strong> </p>
+
+    <!-- ZONA 6: Date despre utilizator si statistici -->
+    <section id="zona6">
+        <h2>Date despre utilizator si statistici</h2>
+        <p>Aici sunt afisate cateva date si statistici despre utilizatori si activitatea site-ului.</p>
     </section>
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Pentru orice intrebari, sugestii sau probleme, ne puteti contacta prin urmatoarele metode:</p>
-        <address>
-            Telefon: <a href="tel:+40123456789">+40 123 456 789</a><br>
-            E-mail: <a href="mailto:maximilian.vocheci@s.unibuc.ro">maximilian.vocheci@s.unibuc.ro</a><br>
-            Chat: <a href="https://wa.me/40123456789">WhatsApp</a>
-        </address>
-        <h3>Locatie:</h3>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.290121271078!2d26.09621507683869!3d44.435671773914785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff3327c030d1%3A0xcca921f5e92bcd84!2sBulevardul%20Regina%20Elisabeta%204-12%2C%20Bucure%C8%99ti%20030018!5e0!3m2!1sro!2sro!4v1697028765432!5m2!1sro!2sro" allowfullscreen></iframe>
+
+    <!-- ZONA 7: Date despre site si server -->
+    <section id="zona7">
+        <h2>Date despre site si server</h2>
+        <p>Informatii tehnice despre server, uptime si alte detalii relevante.</p>
+    </section>
+
+    <!-- ZONA 8: Sectiuni interne -->
+    <section id="zona8">
+        <!-- #populare -->
+        <section id="populare">
+            <h3>Retete Populare</h3>
+            <p>Aici gasesti cele mai apreciate retete din toate categoriile.</p>
+            <iframe class="video-frame"
+                    name="videoFrame"
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    allowfullscreen>
+            </iframe>
+            <p>Vizualizeaza videoclipuri despre retetele noastre populare:</p>
+            <div class="video-tabs">
+                <a href="https://youtu.be/zR1slAT13MQ" target="videoFrame">Video 1: Paste carbonara</a>
+            </div>
+        </section>
+
+        <!-- #rapide -->
+        <section id="rapide">
+            <h3>Retete Rapide</h3>
+            <p>Retete gata in mai putin de 30 de minute, ideale pentru zilele aglomerate.</p>
+        </section>
+
+        <!-- #autentificare -->
+        <section id="autentificare">
+            <h3>Autentificare / Înregistrare</h3>
+            <p>Conecteaza-te pentru a beneficia de toate functionalitatile site-ului.</p>
+        </section>
+
+        <!-- #despre -->
+        <section id="despre">
+            <h3>Despre noi</h3>
+            <p>Site-ul <strong>Găteală</strong> este un proiect de laborator pentru materia Tehnici Web.</p>
+            <p>Rol strict educational pentru a invata HTML, CSS, JavaScript si framework-uri.</p>
+            <p><strong>Găteală nu este menit pentru uz comercial sau castig monetar.</strong></p>
+        </section>
+
+        <!-- #contact -->
+        <section id="contact">
+            <h3>Contact</h3>
+            <p>Pentru intrebari, sugestii sau probleme, ne puteti contacta prin urmatoarele metode:</p>
+            <address>
+                Telefon: <a href="tel:+40123456789">+40 123 456 789</a><br>
+                E-mail: <a href="mailto:maximilian.vocheci@s.unibuc.ro">maximilian.vocheci@s.unibuc.ro</a><br>
+                Chat: <a href="https://wa.me/40123456789">WhatsApp</a>
+            </address>
+            <h3>Locatie:</h3>
+            <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.290121271078!2d26.09621507683869!3d44.435671773914785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff3327c030d1%3A0xcca921f5e92bcd84!2sBulevardul%20Regina%20Elisabeta%204-12%2C%20Bucuresti%20030018!5e0!3m2!1sro!2sro!4v1697028765432!5m2!1sro!2sro"
+                    allowfullscreen>
+            </iframe>
+        </section>
     </section>
 </main>
+
+<!-- Footer -->
 <footer>
+    <p class="banner-print">Acesta este un proiect scolar!</p>
     <small>&copy; 2025 Găteală. Toate drepturile rezervate.</small>
 </footer>
+
+<!-- Buton "Back to Top" -->
+<a href="#top" class="btn-top" data-tooltip="Inceputul paginii">
+    <div class="diamond">
+        <div class="triangle"></div>
+    </div>
+</a>
+
+<!-- pentru hamburger -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const trigger = document.querySelector('.menu-trigger');
+        const menu = document.querySelector('.menu');
+        trigger.addEventListener('click', function () {
+            menu.classList.toggle('active');
+        });
+    });
+</script>
+
 </body>
 </html>
