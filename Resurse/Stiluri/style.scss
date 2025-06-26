@@ -37,7 +37,7 @@ html, body {
   height: 100%;
   font-size: 16px;
   font-family: 'Poppins', sans-serif;
-  background-color: var(--background-light);
+  // Eliminăm background-color de aici, îl vom seta direct pe body
   color: var(--text-color);
   box-sizing: border-box;
 }
@@ -46,15 +46,15 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  background-color: var(--background-light); // Acum fundalul body-ului va fi negru
 }
 
 main {
   flex: 1;
 }
 
-// Variabile CSS
 :root {
-  --background-light: #ff9800;
+  --background-light: #ff9800; // Asigurați-vă că este această valoare
   --background-dark: #000000;
   --text-color: #333;
   --culoare-principala: #9B59B6;
@@ -65,6 +65,7 @@ main {
   --border-radius: 0.5rem;
   --font-size-base: 1rem;
   --transition-time: 0.5s;
+  --link-visited-color: var(--background-light); // Aceasta ar trebui să fie aici
 }
 
 // Variabile SASS
@@ -407,6 +408,9 @@ tbody td { padding: 0.5rem; border: 1px solid #ccc; }
   opacity: 0.7;
   @include transition(opacity var(--transition-time));
   z-index: 9999;
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 .btn-top:hover { opacity: 1; }
 .btn-top .diamond {
@@ -521,9 +525,6 @@ tbody td { padding: 0.5rem; border: 1px solid #ccc; }
   display: block;
 }
 
-:root {
-  --link-visited-color: var(--background-light);
-}
 a:visited {
   color: var(--link-visited-color);
 }
@@ -592,10 +593,6 @@ $grid-breakpoints: (
 );
 // Font-ul
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
-body {
-  // Acest stil va fi aplicat
-  background-color: #f0f2f5;
-}
 // Mixin pentru tranzitii - reutilizabil
 @mixin transition($args...) {
   transition: $args;
@@ -604,14 +601,14 @@ body {
 .hr-stilizat {
   border: none;
   background-color: transparent;
-  height: 2em;
+  height: 1em;
   background-image:
-          repeating-linear-gradient(to right, var(--culoare-principala) 0, var(--culoare-principala) 25px, transparent 25px, transparent 35px),
-          repeating-linear-gradient(to right, var(--culoare-principala) 0, var(--culoare-principala) 25px, transparent 25px, transparent 35px),
-          repeating-linear-gradient(to right, var(--culoare-principala) 0, var(--culoare-principala) 25px, transparent 25px, transparent 35px);
-  background-repeat: repeat-x;
-  background-size: 100% calc(2em / 3);
-  background-position: 0 0, 0 50%, 0 100%;
+          repeating-linear-gradient(to right, #000 0, #000 25px, transparent 25px, transparent 35px),
+          repeating-linear-gradient(to right, #000 0, #000 25px, transparent 25px, transparent 35px),
+          repeating-linear-gradient(to right, #000 0, #000 25px, transparent 25px, transparent 35px);
+  background-repeat: no-repeat;
+  background-size: 100% calc(100% / 3);
+  background-position: 0 0, 0 33.33%, 0 66.66%;
 }
 
 .efect-duotone {
@@ -624,8 +621,7 @@ body {
   width: 500px;
   height: 500px;
 
-  background-image: url('/Resurse/Images/12387.jpg');
-
+  background-image: url('../images/12387.jpg');
   background-size: cover;
   background-position: center;
   filter: grayscale(100%) contrast(150%);
@@ -660,5 +656,154 @@ body {
 .efect-duotone:hover::after {
   background-color: var(--c4);
 }
+#text-reflectat {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  transform-origin: 0 0;
+  transform: rotateX(180deg) skew(-45deg) scaleY(0.5) translate(10px, -25px);
+  opacity: 0.55;
+  filter: blur(2px);
+  transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+}
 
+#text {
+  position: relative;
+}
 
+#text:hover #text-reflectat {
+  transform: rotateX(180deg) skew(-45deg) scaleY(0.7) translate(10px, -40px);
+  filter: blur(0px);
+  opacity: 0.8;
+}
+
+#text, #text-reflectat {
+  font-size: 50px;
+  line-height: 50px;
+  font-weight: bold;
+}
+
+#galerie-statica {
+  padding: var(--padding-text);
+  margin-bottom: var(--spacing-medium);
+  background-color: var(--background-light);
+  border-radius: var(--border-radius);
+}
+
+.galerie-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: var(--spacing-medium);
+  justify-content: center;
+  align-items: stretch;
+}
+
+.galerie-item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(50%);
+    transition: filter 2s ease, transform 0.2s ease;
+  }
+
+  figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--spacing-small);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    box-sizing: border-box;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 0.2em;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &:hover {
+    img {
+      filter: brightness(100%);
+      transform: scale(1.05);
+    }
+    figcaption {
+      transform: translateY(0);
+      background-color: rgba(0, 0, 0, 0.9);
+      color: #ffcc00;
+    }
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: translateY(-3px);
+  }
+}
+
+.galerie-item.not-visible {
+  background-color: #000;
+  border: 2px solid #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  height: 250px;
+
+  img {
+    display: none;
+  }
+  figcaption {
+    position: static;
+    transform: none;
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    h3, p {
+      margin: 0;
+    }
+  }
+  .hidden-message {
+    display: block;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+}
+
+// Ajustări responsive pentru grilă
+@media (max-width: 900px) {
+  .galerie-container {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .galerie-container {
+    grid-template-columns: 1fr;
+  }
+}
