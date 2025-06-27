@@ -5,10 +5,9 @@
 <%- include('../fragmente/header') %>
 
 <main class="layout-grid">
-    <!-- ZONA 1: Rețete -->
-    <hr class="hr-stilizat">
-    <section id="efecte-speciale">
-             <h2> efecte css</h2>
+    <section id="efecte-si-galerie-container">
+        <div class="efecte-css-wrapper">
+            <h2>Efecte CSS</h2>
             <article>
                 <h3>Separator (hr-stilizat)</h3>
                 <hr class="hr-stilizat">
@@ -17,7 +16,49 @@
                 <h3>Duotone</h3>
                 <div class="efect-duotone"></div>
             </article>
+            <article>
+                <h3>Reflexie text</h3>
+                <div id="text">
+                    Un text
+                    <div id="text-reflectat">Un text</div>
+                </div>
+            </article>
+        </div>
+
+        <div class="galerie-statica-wrapper">
+            <h2>Galerie Statică</h2>
+            <div class="galerie-container">
+                <%
+                // Păstrează logica EJS existentă aici pentru a itera prin imagini
+                const galerieData = galerie_gatit.galerie;
+                const currentTime = new Date();
+                const currentHour = currentTime.getHours();
+
+                galerieData.forEach(function(imagine) {
+                    let isVisible = false;
+                    imagine.intervale_ore.forEach(function(interval) {
+                        const startHour = interval[0];
+                        const endHour = interval[1];
+                        if (currentHour >= startHour && currentHour < endHour) {
+                            isVisible = true;
+                        }
+                    });
+                %>
+                <figure class="galerie-item <%= isVisible ? '' : 'not-visible' %>">
+                    <img src="<%= imagine.cale_relativa %>" alt="<%= imagine.alternativ %>">
+                    <figcaption>
+                        <h3><%= imagine.nume_imag %></h3>
+                        <p><%= imagine.descriere_imag %></p>
+                        <% if (!isVisible) { %>
+                            <p class="hidden-message">Această imagine nu este vizibilă acum.</p>
+                        <% } %>
+                    </figcaption>
+                </figure>
+                <% }); %>
+            </div>
+        </div>
     </section>
+    <!-- ZONA 1: Rețete -->
     <section id="zona1">
         <h2>Rețete</h2>
 
@@ -63,7 +104,6 @@
             </figure>
         </article>
     </section>
-    <hr class="hr-stilizat">
     <!-- ZONA 2: Tabel cu 10 Rețete -->
     <section id="zona2">
         <h2>Tabel cu 10 Rețete</h2>
@@ -92,7 +132,6 @@
             </tbody>
         </table>
     </section>
-    <hr class="hr-stilizat ">
     <!-- ZONA 3: Calendar Evenimente -->
     <section id="zona3">
         <h2>Calendar Evenimente</h2>

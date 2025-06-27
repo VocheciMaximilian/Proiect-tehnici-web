@@ -1,12 +1,14 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const sass = require('sass');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Globale
 const obGlobal = { obErori: null };
+const galerieData = JSON.parse(fs.readFileSync(path.join(__dirname, 'galerie_data.json'), 'utf8'));
 
 global.folderScss = path.join(__dirname, 'Resurse', 'Stiluri');
 global.folderCss = path.join(__dirname, 'Resurse', 'Stiluri');
@@ -37,12 +39,87 @@ function initErori() {
 }
 initErori();
 
-// Creare foldere temp dacă nu există
+// Creare foldere temp
 const vect_foldere = ['temp'];
 vect_foldere.forEach(f => {
     const full = path.join(__dirname, f);
     if (!fs.existsSync(full)) fs.mkdirSync(full);
 });
+if (!fs.existsSync(global.folderBackup)) {
+    fs.mkdirSync(global.folderBackup, { recursive: true });
+    console.log(`[SASS] Created backup folder: ${global.folderBackup}`);
+}
+
+
+// b
+async function compileazaScss(caleScss, caleCss) {
+    const scssFileName = path.basename(caleScss, '.scss');
+    const cssOutputFileName = path.basename(caleCss);
+
+    // c. Salvare backup
+    if (fs.existsSync(caleCss)) {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const backupFileName = `${scssFileName}_${timestamp}.css`;
+        const backupPath = path.join(global.folderBackup, backupFileName);
+
+        try {
+            fs.copyFileSync(caleCss, backupPath);
+            console.log(`[SASS] Backup created for ${cssOutputFileName}: ${backupFileName}`);
+        } catch (err) {
+            console.error(`[SASS ERROR] Failed to create backup for ${cssOutputFileName}:`, err);
+        }
+    }
+    //compilare
+    try {
+        const result = await sass.compileAsync(caleScss, {
+            style: 'expanded'
+        });
+        fs.writeFileSync(caleCss, result.css.toString());
+        console.log(`[SASS] Compiled: ${caleScss} -> ${caleCss}`);
+    } catch (err) {
+        console.error(`[SASS ERROR] Failed to compile ${caleScss}:`, err.message);
+    }
+}
+
+// d
+async function initialCompileScss() {
+    console.log('[SASS] Starting initial compilation...');
+    const scssFiles = fs.readdirSync(global.folderScss).filter(file => file.endsWith('.scss'));
+    for (const file of scssFiles) {
+        const scssPath = path.join(global.folderScss, file);
+        const cssPath = path.join(global.folderCss, path.basename(file, '.scss') + '.css');
+        await compileazaScss(scssPath, cssPath);
+    }
+    console.log('[SASS] Initial compilation finished.');
+}
+
+// e
+function setupScssWatcher() {
+    console.log(`[SASS] Watching for changes in: ${global.folderScss}`);
+    fs.watch(global.folderScss, async (eventType, filename) => {
+        if (filename && filename.endsWith('.scss')) {
+            const scssPath = path.join(global.folderScss, filename);
+            const cssPath = path.join(global.folderCss, path.basename(filename, '.scss') + '.css');
+
+            // Verifică dacă fișierul SCSS există (nu a fost șters)
+            if (fs.existsSync(scssPath)) {
+                console.log(`[SASS] Change detected (${eventType}): ${filename}`);
+                await compileazaScss(scssPath, cssPath);
+            } else if (eventType === 'rename') { // Poate indica o ștergere sau redenumire
+                // Dacă fișierul SCSS a fost șters, poți șterge și CSS-ul corespunzător
+                const cssToDelete = path.join(global.folderCss, path.basename(filename, '.scss') + '.css');
+                if (fs.existsSync(cssToDelete)) {
+                    try {
+                        fs.unlinkSync(cssToDelete);
+                        console.log(`[SASS] Deleted corresponding CSS file: ${cssToDelete}`);
+                    } catch (err) {
+                        console.error(`[SASS ERROR] Failed to delete CSS file ${cssToDelete}:`, err);
+                    }
+                }
+            }
+        }
+    });
+}
 
 // Setare view engine si directoare EJS
 app.set('view engine', 'ejs');
@@ -70,7 +147,8 @@ app.get('/favicon.ico', (req, res) => {
 // Pagina principala pe multiple cai
 app.get(['/', '/index', '/home'], (req, res) => {
     res.render('pagini/index', {
-        ip: req.ip
+        ip: req.ip,
+        galerie_gatit: galerieData.galerie_gatit
     });
 });
 

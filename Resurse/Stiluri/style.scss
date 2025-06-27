@@ -2,6 +2,23 @@
 $primary: #9B59B6;
 $secondary: #2ECC71;
 $border-radius: 0.2rem;
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$light: #fdfdff;
+$dark: #2C3E50;
+$body-color: #34495E;
+
+$h1-font-size: 2.8rem;
+$h2-font-size: 2.2rem;
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1450px
+);
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 // RESET CSS (Meyer reset)
 html, body, div, span, applet, object, iframe,
@@ -571,26 +588,6 @@ main a:not([href^="http"]):active {
   border-radius: var(--border-radius);
 }
 
-$primary: #9B59B6;
-$secondary: #2ECC71;
-$border-radius: 0.2rem;
-$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-$light: #fdfdff;
-$dark: #2C3E50;
-$body-color: #34495E;
-
-$h1-font-size: 2.8rem;
-$h2-font-size: 2.2rem;
-
-$grid-breakpoints: (
-        xs: 0,
-        sm: 576px,
-        md: 768px,
-        lg: 992px,
-        xl: 1200px,
-        xxl: 1450px
-);
 // Font-ul
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
 // Mixin pentru tranzitii - reutilizabil
@@ -783,6 +780,7 @@ $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
     align-items: center;
     justify-content: center;
     height: 100%;
+
 
     h3, p {
       margin: 0;

@@ -1,0 +1,48 @@
+{
+  "galerie_gatit": {
+    "galerie": [
+      {
+        "cale_relativa": "/resurse/images/12387.jpg",
+        "nume_imag": "Aperitive",
+        "alternativ": "Platou de aperitive",
+        "descriere_imag": "Platou de aperitive variate pentru orice ocazie.",
+        "intervale_ore": [[0, 7], [16, 23]]
+      },
+      {
+        "cale_relativa": "/resurse/images/19956.jpg",
+        "nume_imag": "Feluri Principale",
+        "alternativ": "Mâncăruri sățioase",
+        "descriere_imag": "Rețete delicioase și variate pentru mesele principale ale zilei.",
+        "intervale_ore": [[7, 16]]
+      },
+      {
+        "cale_relativa": "/resurse/images/14508.jpg",
+        "nume_imag": "Deserturi",
+        "alternativ": "Deserturi dulci",
+        "descriere_imag": "Prăjituri, tarte și alte dulciuri perfecte pentru orice moment.",
+        "intervale_ore": [[0, 24]]
+      },
+      {
+        "cale_relativa": "/resurse/images/12387.jpg",
+        "nume_imag": "Aperitive 4",
+        "alternativ": "Platou de aperitive 4",
+        "descriere_imag": "Încă un platou de aperitive.",
+        "intervale_ore": [[0, 24]]
+      },
+      {
+        "cale_relativa": "/resurse/images/19956.jpg",
+        "nume_imag": "Feluri Principale 4",
+        "alternativ": "Mâncăruri sățioase 4",
+        "descriere_imag": "Alte rețete pentru mesele principale.",
+        "intervale_ore": [[0, 24]]
+      },
+      {
+        "cale_relativa": "/resurse/images/14508.jpg",
+        "nume_imag": "Deserturi 4",
+        "alternativ": "Deserturi dulci 4",
+        "descriere_imag": "O selecție variată de deserturi.",
+        "intervale_ore": [[0, 24]]
+      }
+    ]
+  }
+}
