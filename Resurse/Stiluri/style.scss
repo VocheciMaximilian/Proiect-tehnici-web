@@ -614,9 +614,9 @@ main a:not([href^="http"]):active {
   background-color: transparent;
   height: 1em;
   background-image:
-          repeating-linear-gradient(to right, #000 0, #000 25px, transparent 25px, transparent 35px),
-          repeating-linear-gradient(to right, #000 0, #000 25px, transparent 25px, transparent 35px),
-          repeating-linear-gradient(to right, #000 0, #000 25px, transparent 25px, transparent 35px);
+    repeating-linear-gradient(to right, #9B59B6 0, #9B59B6 10%, transparent 10%, transparent 35%),
+    repeating-linear-gradient(to right, #2ECC71 0, #2ECC71 17%, transparent 17%, transparent 35%),
+    repeating-linear-gradient(to right, #2C3E50 0, #2C3E50 25%, transparent 25%, transparent 35%);
   background-repeat: no-repeat;
   background-size: 100% calc(100% / 3);
   background-position: 0 0, 0 33.33%, 0 66.66%;
