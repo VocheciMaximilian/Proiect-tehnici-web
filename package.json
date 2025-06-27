@@ -10,9 +10,10 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build-css": "sass Resurse/Stiluri/style.scss Resurse/Stiluri/style.css",
-    "watch-css": "sass --watch Resurse/Stiluri/style.scss:Resurse/Stiluri/style.css",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build-css": "sass Resurse/Stiluri/style.scss Resurse/Stiluri/style.css && sass Resurse/Stiluri/custom.scss Resurse/Stiluri/custom.css",
+    "watch-css": "sass --watch Resurse/Stiluri/style.scss:Resurse/Stiluri/style.css Resurse/Stiluri/custom.scss:Resurse/Stiluri/custom.css"
   },
   "dependencies": {
     "bootstrap": "^5.3.7",

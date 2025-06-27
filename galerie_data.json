@@ -20,7 +20,8 @@
         "nume_imag": "Deserturi",
         "alternativ": "Deserturi dulci",
         "descriere_imag": "Prăjituri, tarte și alte dulciuri perfecte pentru orice moment.",
-        "intervale_ore": [[0, 24]]
+        "intervale_ore": [[0, 24]],
+        "attribution": "Photo by Jane Doe, CC-BY 4.0"
       },
       {
         "cale_relativa": "/resurse/images/12387.jpg",
@@ -41,6 +42,41 @@
         "nume_imag": "Deserturi 4",
         "alternativ": "Deserturi dulci 4",
         "descriere_imag": "O selecție variată de deserturi.",
+        "intervale_ore": [[0, 24]]
+      },
+      {
+        "cale_relativa": "/resurse/images/pexels-ash-craig-122861-376464.jpg",
+        "nume_imag": "Pancakes cu fructe",
+        "alternativ": "Pancakes cu fructe și sirop",
+        "descriere_imag": "Pancakes delicioase cu fructe și sirop.",
+        "intervale_ore": [[0, 24]]
+      },
+      {
+        "cale_relativa": "/resurse/images/pexels-ella-olsson-572949-1640772.jpg",
+        "nume_imag": "Salată sănătoasă",
+        "alternativ": "Salată cu legume proaspete",
+        "descriere_imag": "Salată colorată cu legume proaspete.",
+        "intervale_ore": [[0, 24]]
+      },
+      {
+        "cale_relativa": "/resurse/images/pexels-ella-olsson-572949-1640777.jpg",
+        "nume_imag": "Salată cu avocado",
+        "alternativ": "Salată cu avocado și roșii",
+        "descriere_imag": "Salată proaspătă cu avocado și roșii.",
+        "intervale_ore": [[0, 24]]
+      },
+      {
+        "cale_relativa": "/resurse/images/pexels-fotios-photos-1279330.jpg",
+        "nume_imag": "Paste cu ciuperci",
+        "alternativ": "Paste cu ciuperci și sos",
+        "descriere_imag": "Paste delicioase cu ciuperci și sos cremos.",
+        "intervale_ore": [[0, 24]]
+      },
+      {
+        "cale_relativa": "/resurse/images/pexels-janetrangdoan-1099680.jpg",
+        "nume_imag": "Platou cu fructe",
+        "alternativ": "Platou cu fructe proaspete",
+        "descriere_imag": "Platou variat cu fructe proaspete și colorate.",
         "intervale_ore": [[0, 24]]
       }
     ]

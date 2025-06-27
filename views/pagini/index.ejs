@@ -4,7 +4,54 @@
 <body>
 <%- include('../fragmente/header') %>
 
-<main class="layout-grid">
+<main>
+    <section class="galerie-statica-wrapper">
+        <h2>Galerie Statică</h2>
+        <div class="galerie-container">
+            <% 
+            // Filter visible images for the current hour
+            const galerieData = galerie_gatit.galerie;
+            const currentTime = new Date();
+            const currentHour = currentTime.getHours();
+            const visibleImages = galerieData.filter(function(imagine) {
+                return imagine.intervale_ore.some(function(interval) {
+                    return currentHour >= interval[0] && currentHour < interval[1];
+                });
+            });
+            // zig-zag: group images into rows of 3 and reverse every even row
+            function chunkArray(array, size) {
+                const result = [];
+                for (let i = 0; i < array.length; i += size) {
+                    result.push(array.slice(i, i + size));
+                }
+                return result;
+            }
+            const rows = chunkArray(visibleImages, 3);
+            let globalIdx = 0;
+            rows.forEach(function(row, rowIdx) {
+                // zig-zag: reverse every even row (1-based)
+                if (rowIdx % 2 === 1) row.reverse();
+                row.forEach(function(imagine) {
+            %>
+            <figure class="galerie-item">
+                <img src="<%= imagine.cale_relativa %>" alt="<%= imagine.alternativ %>" title="<%= imagine.descriere_imag %>">
+                <figcaption>
+                    <h3>
+                        <%= (globalIdx+1).toString().padStart(2, '0') %>. <%= imagine.nume_imag %>
+                    </h3>
+                    <p><%= imagine.descriere_imag %></p>
+                    <% if (imagine.attribution) { %>
+                      <small style="display:block;font-style:italic;margin-top:0.3em;opacity:0.7;">
+                        <%= imagine.attribution %>
+                      </small>
+                    <% } %>
+                </figcaption>
+            </figure>
+            <% globalIdx++; });
+            }); %>
+        </div>
+    </section>
+    <main class="layout-grid">
     <section id="efecte-si-galerie-container">
         <div class="efecte-css-wrapper">
             <h2>Efecte CSS</h2>
@@ -23,39 +70,6 @@
                     <div id="text-reflectat">Un text</div>
                 </div>
             </article>
-        </div>
-
-        <div class="galerie-statica-wrapper">
-            <h2>Galerie Statică</h2>
-            <div class="galerie-container">
-                <%
-                // Păstrează logica EJS existentă aici pentru a itera prin imagini
-                const galerieData = galerie_gatit.galerie;
-                const currentTime = new Date();
-                const currentHour = currentTime.getHours();
-
-                galerieData.forEach(function(imagine) {
-                    let isVisible = false;
-                    imagine.intervale_ore.forEach(function(interval) {
-                        const startHour = interval[0];
-                        const endHour = interval[1];
-                        if (currentHour >= startHour && currentHour < endHour) {
-                            isVisible = true;
-                        }
-                    });
-                %>
-                <figure class="galerie-item <%= isVisible ? '' : 'not-visible' %>">
-                    <img src="<%= imagine.cale_relativa %>" alt="<%= imagine.alternativ %>">
-                    <figcaption>
-                        <h3><%= imagine.nume_imag %></h3>
-                        <p><%= imagine.descriere_imag %></p>
-                        <% if (!isVisible) { %>
-                            <p class="hidden-message">Această imagine nu este vizibilă acum.</p>
-                        <% } %>
-                    </figcaption>
-                </figure>
-                <% }); %>
-            </div>
         </div>
     </section>
     <!-- ZONA 1: Rețete -->
@@ -175,6 +189,7 @@
     <!-- ZONA 8: Secțiuni interne -->
     <section id="zona8">
     </section>
+    </main>
 </main>
 
 <%- include('../fragmente/footer') %>

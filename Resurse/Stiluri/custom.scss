@@ -1,0 +1,73 @@
+// Custom Bootstrap theme variables
+$primary: #9B59B6;
+$secondary: #2ECC71;
+$border-radius: 1rem; // Custom border radius
+$font-family-sans-serif: 'Poppins', sans-serif;
+$h1-font-size: 2.8rem;
+$h2-font-size: 2.2rem;
+$h3-font-size: 1.8rem;
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1450px
+);
+$body-bg: #ff9800; // Default background
+$body-color: #34495E; // Default text color
+$btn-font-weight: 700; // Extra variable: bold buttons
+
+// Import Bootstrap after variable overrides
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Theme classes
+.theme-light, .theme-dark {
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+.theme-light,
+.theme-light main,
+.theme-light .galerie-statica-wrapper,
+.theme-light .galerie-container {
+  background-color: #ff9800 !important;
+  color: #34495E !important;
+}
+
+.theme-dark,
+.theme-dark main,
+.theme-dark .galerie-statica-wrapper,
+.theme-dark .galerie-container {
+  background-color: #222 !important;
+  color: #fff !important;
+}
+
+// Always keep header/nav black with white text
+header, nav {
+  background-color: #111 !important;
+  color: #fff !important;
+}
+
+// Make sure menu buttons are visible on black
+header .menu a, nav .menu a, header .btn-custom, nav .btn-custom {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+header .btn-custom, nav .btn-custom {
+  background-color: #9B59B6 !important;
+}
+
+// Example: Use custom variable in a Bootstrap button
+.btn-custom {
+  @extend .btn;
+  background-color: $primary;
+  color: #fff;
+  border-radius: $border-radius;
+  font-weight: $btn-font-weight;
+  &:hover {
+    background-color: darken($primary, 10%);
+    color: #fff;
+  }
+} 

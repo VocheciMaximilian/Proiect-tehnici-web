@@ -53,11 +53,13 @@ if (!fs.existsSync(global.folderBackup)) {
 
 // b
 async function compileazaScss(caleScss, caleCss) {
+    console.log(`[SASS DEBUG] Attempting to compile: ${caleScss}`); // Mesaj de depanare
     const scssFileName = path.basename(caleScss, '.scss');
     const cssOutputFileName = path.basename(caleCss);
 
     // c. Salvare backup
     if (fs.existsSync(caleCss)) {
+        console.log(`[SASS DEBUG] CSS file exists for backup: ${caleCss}`); // Mesaj de depanare
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
         const backupFileName = `${scssFileName}_${timestamp}.css`;
         const backupPath = path.join(global.folderBackup, backupFileName);
@@ -68,6 +70,8 @@ async function compileazaScss(caleScss, caleCss) {
         } catch (err) {
             console.error(`[SASS ERROR] Failed to create backup for ${cssOutputFileName}:`, err);
         }
+    } else {
+        console.log(`[SASS DEBUG] CSS file does NOT exist for backup: ${caleCss}. Skipping backup.`); // Mesaj de depanare
     }
     //compilare
     try {
@@ -85,6 +89,10 @@ async function compileazaScss(caleScss, caleCss) {
 async function initialCompileScss() {
     console.log('[SASS] Starting initial compilation...');
     const scssFiles = fs.readdirSync(global.folderScss).filter(file => file.endsWith('.scss'));
+    console.log(`[SASS DEBUG] Found SCSS files: ${scssFiles.join(', ')}`); // Mesaj de depanare
+    if (scssFiles.length === 0) {
+        console.log('[SASS DEBUG] No SCSS files found to compile.');
+    }
     for (const file of scssFiles) {
         const scssPath = path.join(global.folderScss, file);
         const cssPath = path.join(global.folderCss, path.basename(file, '.scss') + '.css');
@@ -146,9 +154,14 @@ app.get('/favicon.ico', (req, res) => {
 
 // Pagina principala pe multiple cai
 app.get(['/', '/index', '/home'], (req, res) => {
+    const galerie = galerieData.galerie_gatit.galerie;
+    const currentHour = new Date().getHours();
+    const filteredGalerie = galerie.filter(imagine =>
+        imagine.intervale_ore.some(([start, end]) => currentHour >= start && currentHour < end)
+    );
     res.render('pagini/index', {
         ip: req.ip,
-        galerie_gatit: galerieData.galerie_gatit
+        galerie_gatit: { galerie: filteredGalerie }
     });
 });
 
@@ -191,6 +204,8 @@ function afisareEroare(res, identificator = 0, titluArg, textArg, imgArg) {
 }
 
 app.listen(PORT, () => {
+    initialCompileScss();
+    setupScssWatcher();
     console.log(`Serverul rulează pe http://localhost:${PORT}`);
     console.log('__dirname:', __dirname);
     console.log('__filename:', __filename);

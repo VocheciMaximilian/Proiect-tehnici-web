@@ -35,9 +35,66 @@
                     </ul>
                 </li>
                 <li><a href="#contact">Contact</a></li>
-                +    <li><a href="/video-vtt">Video-VTT</a></li>
-
+                <li><a href="/video-vtt">Video-VTT</a></li>
+                <!-- Theme Toggle Button -->
+                <li class="theme-toggle">
+                    <button id="theme-toggle-btn" class="btn-custom">
+                        <i class="fa fa-moon-o"></i> <span>Dark Mode</span>
+                    </button>
+                </li>
             </ul>
         </div>
     </nav>
 </header>
+
+<script>
+// Theme toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const body = document.body;
+    
+    // Get saved theme from localStorage
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    // Apply saved theme
+    if (savedTheme === 'dark') {
+        body.classList.add('theme-dark');
+        body.classList.remove('theme-light');
+        updateButtonText(true);
+    } else {
+        body.classList.add('theme-light');
+        body.classList.remove('theme-dark');
+        updateButtonText(false);
+    }
+    
+    // Toggle theme on button click
+    themeToggleBtn.addEventListener('click', function() {
+        if (body.classList.contains('theme-dark')) {
+            // Switch to light theme
+            body.classList.remove('theme-dark');
+            body.classList.add('theme-light');
+            localStorage.setItem('theme', 'light');
+            updateButtonText(false);
+        } else {
+            // Switch to dark theme
+            body.classList.remove('theme-light');
+            body.classList.add('theme-dark');
+            localStorage.setItem('theme', 'dark');
+            updateButtonText(true);
+        }
+    });
+    
+    function updateButtonText(isDark) {
+        const icon = themeToggleBtn.querySelector('i');
+        const text = themeToggleBtn.querySelector('span');
+        
+        if (isDark) {
+            icon.className = 'fa fa-sun-o';
+            text.textContent = 'Light Mode';
+        } else {
+            icon.className = 'fa fa-moon-o';
+            text.textContent = 'Dark Mode';
+        }
+    }
+});
+</script>

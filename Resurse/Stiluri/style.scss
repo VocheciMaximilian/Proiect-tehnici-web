@@ -1,16 +1,22 @@
 @use "sass:color";
+
+// NOU: Variabile Bootstrap personalizate, definite ÎNAINTE de importul Bootstrap
+// Acestea sunt variabile Sass, nu CSS custom properties
 $primary: #9B59B6;
 $secondary: #2ECC71;
-$border-radius: 0.2rem;
-$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$border-radius: 0.5rem; // Ajustat la 0.5rem pentru consistență cu var(--border-radius)
+$font-family-sans-serif: 'Poppins', sans-serif; // Setat la fontul Poppins, care este deja în proiect
 
-$light: #fdfdff;
-$dark: #2C3E50;
-$body-color: #34495E;
+$light: #fdfdff; // Un alb aproape pur
+$dark: #2C3E50; // Un gri închis
+$body-color: #34495E; // Culoarea textului principal
 
+// Dimensiunea literelor heading-urilor
 $h1-font-size: 2.8rem;
 $h2-font-size: 2.2rem;
+$h3-font-size: 1.8rem; // Adăugat și h3 pentru consistență
 
+// Dimensiuni de ecran (breakpoints)
 $grid-breakpoints: (
         xs: 0,
         sm: 576px,
@@ -19,7 +25,13 @@ $grid-breakpoints: (
         xl: 1200px,
         xxl: 1450px
 );
+
+// Încă o variabilă aleasă de voi (exemplu: o culoare pentru link-uri)
+$link-color: $primary; // Link-urile vor folosi culoarea primară
+
+// Acum importăm Bootstrap, care va folosi variabilele definite mai sus
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
 // RESET CSS (Meyer reset)
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -54,7 +66,6 @@ html, body {
   height: 100%;
   font-size: 16px;
   font-family: 'Poppins', sans-serif;
-  // Eliminăm background-color de aici, îl vom seta direct pe body
   color: var(--text-color);
   box-sizing: border-box;
 }
@@ -63,15 +74,16 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background-color: var(--background-light); // Acum fundalul body-ului va fi negru
+  background-color: var(--background-light);
 }
 
 main {
   flex: 1;
 }
 
+// Variabile CSS Custom Properties (din :root)
 :root {
-  --background-light: #ff9800; // Asigurați-vă că este această valoare
+  --background-light: #ff9800;
   --background-dark: #000000;
   --text-color: #333;
   --culoare-principala: #9B59B6;
@@ -82,10 +94,10 @@ main {
   --border-radius: 0.5rem;
   --font-size-base: 1rem;
   --transition-time: 0.5s;
-  --link-visited-color: var(--background-light); // Aceasta ar trebui să fie aici
+  --link-visited-color: var(--background-light);
 }
 
-// Variabile SASS
+// Variabile SASS (specifice proiectului, nu Bootstrap)
 $menu-bg: #000000;
 $menu-text-color: white;
 $hover-overlay: rgba(255, 255, 255, 0.3);
@@ -291,6 +303,7 @@ nav {
   display: grid;
   grid-gap: var(--spacing-medium);
   grid-template-areas:
+    "efecte-si-galerie efecte-si-galerie efecte-si-galerie"
     "zona1 zona1 zona1"
     "zona3 zona2 zona4"
     "zona5 zona6 zona7"
@@ -312,6 +325,7 @@ nav {
   .layout-grid {
     grid-template-areas:
       "zona1 zona1"
+      "efecte-si-galerie efecte-si-galerie" // NOU: Ajustare pentru ecrane medii
       "zona3 zona2"
       "zona4 zona4"
       "zona5 zona6"
@@ -327,6 +341,7 @@ nav {
   .layout-grid {
     grid-template-areas:
       "zona1"
+      "efecte-si-galerie" // NOU: Ajustare pentru ecrane mici
       "zona3"
       "zona2"
       "zona4"
@@ -589,7 +604,6 @@ main a:not([href^="http"]):active {
 }
 
 // Font-ul
-$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
 // Mixin pentru tranzitii - reutilizabil
 @mixin transition($args...) {
   transition: $args;
@@ -680,19 +694,37 @@ $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
 }
 
-#galerie-statica {
-  padding: var(--padding-text);
-  margin-bottom: var(--spacing-medium);
-  background-color: var(--background-light);
+// NOU: Stiluri pentru containerul principal al efectelor și galeriei
+#efecte-si-galerie-container {
+  grid-area: efecte-si-galerie; // Asignează-l la noua zonă
+  display: grid; // Fă din acest container o grilă în sine
+  grid-template-columns: 1fr 1fr; // Două coloane egale pentru efecte și galerie
+  grid-gap: var(--spacing-medium); // Spațiu între cele două coloane
+  padding: var(--padding-text); // Adaugă padding la această secțiune
+  background-color: var(--background-light); // Folosește culoarea de fundal a paginii
   border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-medium);
 }
 
+.efecte-css-wrapper {
+  // Stiluri pentru partea stângă (efecte)
+}
+
+.galerie-statica-wrapper, .galerie-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// NOU: Stiluri pentru Galerie Statică
 .galerie-container {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: var(--spacing-medium);
-  justify-content: center;
+  grid-template-columns: repeat(3, 1fr); // 3 columns on large screens
+  gap: var(--spacing-medium);
   align-items: stretch;
+  counter-reset: galerie-index;
 }
 
 .galerie-item {
@@ -704,55 +736,56 @@ $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  height: 250px;
+  height: 450px; // NOU: Înălțime fixă ajustată la cerință (400-500px)
   cursor: pointer;
   transition: all 0.2s ease;
+  counter-increment: galerie-index; // NOU: Incrementează contorul pentru fiecare element
+}
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    filter: brightness(50%);
-    transition: filter 2s ease, transform 0.2s ease;
+.galerie-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(50%);
+  transition: filter 2s ease, transform 0.2s ease;
+}
+
+.galerie-item figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: var(--spacing-small);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0.2em;
   }
-
-  figcaption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: var(--spacing-small);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    text-align: center;
-    transform: translateY(100%);
-    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-    box-sizing: border-box;
-
-    h3 {
-      margin-top: 0;
-      margin-bottom: 0.2em;
-    }
-    p {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
   }
+}
 
-  &:hover {
-    img {
-      filter: brightness(100%);
-      transform: scale(1.05);
-    }
-    figcaption {
-      transform: translateY(0);
-      background-color: rgba(0, 0, 0, 0.9);
-      color: #ffcc00;
-    }
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transform: translateY(-3px);
-  }
+.galerie-item:hover img {
+  filter: brightness(100%);
+  transform: scale(1.05);
+}
+.galerie-item:hover figcaption {
+  transform: translateY(0);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #ffcc00;
+}
+.galerie-item:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transform: translateY(-3px);
 }
 
 .galerie-item.not-visible {
@@ -764,7 +797,7 @@ $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
   justify-content: center;
   color: #fff;
   text-align: center;
-  height: 250px;
+  height: 450px; // Menține înălțimea fixă, ajustată la fel ca .galerie-item
 
   img {
     display: none;
@@ -793,15 +826,73 @@ $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 }
 
+// NOU: Stiluri pentru afișarea contorului
+.galerie-item figcaption h3 .galerie-index-counter {
+  &::before {
+    content: counter(galerie-index, decimal-leading-zero) ". "; // Afișează indexul cu zero-leading
+    margin-right: 0.2em;
+  }
+}
+
+
 // Ajustări responsive pentru grilă
 @media (max-width: 900px) {
+  .layout-grid {
+    grid-template-areas:
+      "zona1 zona1"
+      "efecte-si-galerie efecte-si-galerie" // NOU: Ajustare pentru ecrane medii
+      "zona3 zona2"
+      "zona4 zona4"
+      "zona5 zona6"
+      "zona7 zona7"
+      "zona8 zona8";
+    grid-template-columns: 1fr 1fr;
+    padding: 0 var(--spacing-small);
+    width: 90%;
+  }
+  #efecte-si-galerie-container {
+    grid-template-columns: 1fr; // Pe ecrane medii, stivuiește efectele și galeria
+  }
   .galerie-container {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(2, 1fr); // 2 columns on medium screens
+  }
+  .galerie-item {
+    height: 350px; // Înălțime ajustată pentru ecrane medii
   }
 }
 
 @media (max-width: 600px) {
-  .galerie-container {
+  .layout-grid {
+    grid-template-areas:
+      "zona1"
+      "efecte-si-galerie" // NOU: Ajustare pentru ecrane mici
+      "zona3"
+      "zona2"
+      "zona4"
+      "zona5"
+      "zona6"
+      "zona7"
+      "zona8";
     grid-template-columns: 1fr;
+    padding: 0 var(--spacing-small);
+    width: 95%;
+  }
+  nav ul.menu li a {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  @media (min-width: 601px) and (max-width: 900px) {
+    nav ul.menu li:first-child a span {
+      display: none;
+    }
+  }
+  #efecte-si-galerie-container {
+    grid-template-columns: 1fr; // Pe ecrane mici, stivuiește efectele și galeria
+  }
+  .galerie-container {
+    grid-template-columns: 1fr; // 1 column on small screens
+  }
+  .galerie-item {
+    height: 300px; // Înălțime ajustată pentru ecrane mici
   }
 }
