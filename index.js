@@ -169,6 +169,7 @@ app.get(['/', '/index', '/home'], (req, res) => {
         imagine.intervale_ore.some(([start, end]) => currentHour >= start && currentHour < end)
     );
     res.render('pagini/index', {
+        titluPagina: "Acasă",
         ip: req.ip,
         galerie_gatit: { galerie: filteredGalerie }
     });
@@ -255,6 +256,7 @@ app.get('/retete', async (req, res) => {
         }
 
         res.render('pagini/retete', {
+            titluPagina: "Rețete",
             retete,
             categorii,
             categorieSelectata: req.query.categorie || '',
@@ -276,7 +278,10 @@ app.get('/reteta/:id', async (req, res) => {
         if (result.rows.length === 0) {
             return afisareEroare(res, 404);
         }
-        res.render('pagini/reteta', { reteta: result.rows[0] });
+        res.render('pagini/reteta', { 
+            titluPagina: "Detalii rețetă",
+            reteta: result.rows[0] 
+        });
     } catch (err) {
         console.error('Eroare la preluarea retetei:', err);
         afisareEroare(res, 500);
@@ -285,17 +290,17 @@ app.get('/reteta/:id', async (req, res) => {
 
 // Ruta pentru pagina despre
 app.get('/despre', (req, res) => {
-    res.render('pagini/despre');
+    res.render('pagini/despre', { titluPagina: "Despre" });
 });
 
 // Ruta pentru fragmentul orar
 app.get('/fragmente/orar', (req, res) => {
-    res.render('fragmente/orar');
+    res.render('fragmente/orar', { titluPagina: "Orar" });
 });
 
 // Ruta pentru pagina video-vtt
 app.get('/video-vtt', (req, res) => {
-    res.render('pagini/video-vtt');
+    res.render('pagini/video-vtt', { titluPagina: "Video" });
 });
 
 // Ruta pentru erori 404
