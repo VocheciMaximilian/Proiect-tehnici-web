@@ -223,15 +223,28 @@ app.get('/retete', async (req, res) => {
             // Elimină duplicatele
             ingredienteUnice = [...new Set(toateIngrediente)].sort();
         }
+
+        // --- PAGINARE ---
+        const K = 6; // număr de rețete pe pagină
+        const pagina = parseInt(req.query.pagina) || 1;
+        const N = result.rows.length;
+        const nrPagini = Math.ceil(N / K);
+        const start = (pagina - 1) * K;
+        const end = Math.min(start + K, N);
+        const retetePagina = result.rows.slice(start, end);
+        // --- END PAGINARE ---
+
         res.render('pagini/retete', {
-            retete: result.rows,
+            retete: retetePagina,
             titluPagina: 'Rețete',
             categorii,
             categorieSelectata: req.query.categorie || '',
             sort: req.query.sort || '',
             pretMin,
             pretMax,
-            ingredienteUnice
+            ingredienteUnice,
+            paginaCurenta: pagina,
+            nrPagini
         });
     } catch (err) {
         res.status(500).send('Eroare la preluarea rețetelor');

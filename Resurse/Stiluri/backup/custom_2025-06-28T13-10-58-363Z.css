@@ -11896,11 +11896,6 @@ textarea.form-control-lg {
   color: #fff !important;
 }
 
-.theme-purple, .theme-purple main, .theme-purple .galerie-statica-wrapper, .theme-purple .galerie-container {
-  background-color: rebeccapurple !important;
-  color: #fff !important;
-}
-
 header, nav {
   background-color: #111 !important;
   color: #fff !important;
@@ -12052,37 +12047,4 @@ header .btn-custom, nav .btn-custom {
 .form-switch .form-check-input:checked {
   background-color: #9B59B6;
   border-color: #9B59B6;
-}
-
-.paginare {
-  margin: 2rem auto 1rem auto;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.paginare a, .paginare .pagina-curenta {
-  display: inline-block;
-  min-width: 2.2em;
-  padding: 0.5em 1em;
-  border-radius: 0.5em;
-  background: #fff;
-  color: #9B59B6;
-  text-decoration: none;
-  font-weight: bold;
-  border: 1.5px solid #9B59B6;
-  transition: background 0.2s, color 0.2s;
-  margin: 0 0.1em;
-  font-size: 1.1em;
-}
-.paginare a:hover {
-  background: #9B59B6;
-  color: #fff;
-}
-.paginare .pagina-curenta {
-  background: #9B59B6;
-  color: #fff;
-  border: 1.5px solid #9B59B6;
-  cursor: default;
 }

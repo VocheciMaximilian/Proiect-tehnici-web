@@ -777,7 +777,7 @@ progress {
   --bs-breakpoint-xxl: 1450px;
 }
 
-.row, .form-row {
+.row {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   display: flex;
@@ -786,7 +786,7 @@ progress {
   margin-right: calc(-0.5 * var(--bs-gutter-x));
   margin-left: calc(-0.5 * var(--bs-gutter-x));
 }
-.row > *, .form-row > * {
+.row > * {
   flex-shrink: 0;
   width: 100%;
   max-width: 100%;
@@ -1228,7 +1228,7 @@ progress {
     flex: 0 0 auto;
     width: 41.66666667%;
   }
-  .col-md-6, .form-col {
+  .col-md-6 {
     flex: 0 0 auto;
     width: 50%;
   }
@@ -11896,11 +11896,6 @@ textarea.form-control-lg {
   color: #fff !important;
 }
 
-.theme-purple, .theme-purple main, .theme-purple .galerie-statica-wrapper, .theme-purple .galerie-container {
-  background-color: rebeccapurple !important;
-  color: #fff !important;
-}
-
 header, nav {
   background-color: #111 !important;
   color: #fff !important;
@@ -11997,92 +11992,4 @@ header .btn-custom, nav .btn-custom {
 .card-reteta td {
   background: #fff;
   color: #222;
-}
-
-.form-floating > .form-control:focus ~ label,
-.form-floating > .form-control:not(:placeholder-shown) ~ label {
-  color: #9B59B6;
-}
-
-.btn-check:checked + .btn-outline-primary {
-  background-color: #9B59B6;
-  color: #fff;
-  border-color: #9B59B6;
-}
-
-.btn-check + .btn-outline-primary {
-  color: #9B59B6;
-  border-radius: 1rem;
-  font-weight: 700;
-}
-
-.form-row {
-  margin-bottom: 1rem;
-}
-
-.form-col {
-  margin-bottom: 0.5rem;
-}
-
-.form-range::-webkit-slider-thumb {
-  background: #9B59B6;
-  border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.form-range::-moz-range-thumb {
-  background: #9B59B6;
-  border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.form-range::-ms-thumb {
-  background: #9B59B6;
-  border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.form-range {
-  accent-color: #9B59B6;
-}
-
-.form-switch .form-check-input:checked {
-  background-color: #9B59B6;
-  border-color: #9B59B6;
-}
-
-.paginare {
-  margin: 2rem auto 1rem auto;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.paginare a, .paginare .pagina-curenta {
-  display: inline-block;
-  min-width: 2.2em;
-  padding: 0.5em 1em;
-  border-radius: 0.5em;
-  background: #fff;
-  color: #9B59B6;
-  text-decoration: none;
-  font-weight: bold;
-  border: 1.5px solid #9B59B6;
-  transition: background 0.2s, color 0.2s;
-  margin: 0 0.1em;
-  font-size: 1.1em;
-}
-.paginare a:hover {
-  background: #9B59B6;
-  color: #fff;
-}
-.paginare .pagina-curenta {
-  background: #9B59B6;
-  color: #fff;
-  border: 1.5px solid #9B59B6;
-  cursor: default;
 }

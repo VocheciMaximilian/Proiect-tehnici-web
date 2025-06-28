@@ -2,6 +2,16 @@
 <%- include('../fragmente/header.ejs') %>
 <h1>Rețete</h1>
 
+<!-- BONUS 2: SELECT TEMA -->
+<div style="margin-bottom:1.5rem;">
+  <label for="select-tema" style="font-weight:bold;">Alege tema:</label>
+  <select id="select-tema" style="margin-left:0.5em;">
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+    <option value="purple">Purple</option>
+  </select>
+</div>
+
 <!-- FILTRE NOI cerința 7 -->
 <section class="filtre-produse" style="margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:2rem; align-items:flex-end; border-bottom:2px solid #222; padding-bottom:1.5rem;">
   <div>
@@ -32,7 +42,7 @@
 <form method="get" action="/retete" class="form-filtrare-sortare" style="margin-bottom:2rem; display:flex; gap:1rem; align-items:end; flex-wrap:wrap;" onsubmit="return false;">
   <div>
     <label for="categorie">Categorie:</label>
-    <select name="categorie" id="categorie">
+    <select name="categorie" id="categorie" onchange="filtreaza()">
       <option value="">Toate</option>
       <% categorii.forEach(cat => { %>
         <option value="<%= cat %>" <%= (cat === categorieSelectata) ? 'selected' : '' %>><%= cat %></option>
@@ -41,15 +51,15 @@
   </div>
   <div>
     <label for="filtru-pret-min">Preț minim:</label>
-    <input type="number" name="pretMin" id="filtru-pret-min" min="<%= pretMin %>" max="<%= pretMax %>" value="<%= pretMin %>">
+    <input type="number" name="pretMin" id="filtru-pret-min" min="<%= pretMin %>" max="<%= pretMax %>" value="<%= pretMin %>" oninput="filtreaza()">
   </div>
   <div>
     <label for="filtru-pret-max">Preț maxim:</label>
-    <input type="number" name="pretMax" id="filtru-pret-max" min="<%= pretMin %>" max="<%= pretMax %>" value="<%= pretMax %>">
+    <input type="number" name="pretMax" id="filtru-pret-max" min="<%= pretMin %>" max="<%= pretMax %>" value="<%= pretMax %>" oninput="filtreaza()">
   </div>
   <div>
     <label for="filtru-ingredient">Ingredient principal:</label>
-    <input list="lista-ingrediente" name="ingredient" id="filtru-ingredient" placeholder="Alege ingredient...">
+    <input list="lista-ingrediente" name="ingredient" id="filtru-ingredient" placeholder="Alege ingredient..." oninput="filtreaza()">
     <datalist id="lista-ingrediente">
       <% toateIngredientele.forEach(ing => { %>
         <option value="<%= ing %>">
@@ -58,21 +68,31 @@
   </div>
   <div>
     <label for="filtru-rapida">Doar rețete rapide</label>
-    <input type="checkbox" name="rapida" id="filtru-rapida">
+    <input type="checkbox" name="rapida" id="filtru-rapida" onchange="filtreaza()">
   </div>
   <div>
     <label for="sort">Sortează după:</label>
-    <select name="sort" id="sort">
+    <select name="sort" id="sort" onchange="filtreaza()">
       <option value="">Implicit</option>
       <option value="pret" <%= sort === 'pret' ? 'selected' : '' %>>Preț</option>
       <option value="timp_preparare" <%= sort === 'timp_preparare' ? 'selected' : '' %>>Timp preparare</option>
       <option value="nume" <%= sort === 'nume' ? 'selected' : '' %>>Nume</option>
     </select>
   </div>
-  <button type="submit">Filtrează / Sortează</button>
 </form>
 
+<!-- BUTOANE cerinta 8 -->
+<section class="butoane-filtrare-sortare" style="margin-bottom:2rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+  <button id="btn-filtreaza" type="button" class="btn-custom">Filtrează</button>
+  <button id="btn-sort-asc" type="button" class="btn-custom">Sortează ascendent</button>
+  <button id="btn-sort-desc" type="button" class="btn-custom">Sortează descendent</button>
+  <button id="btn-calculeaza" type="button" class="btn-custom">Calculează prețuri</button>
+  <button id="btn-reseteaza" type="button" class="btn-custom">Resetează filtrele</button>
+</section>
+
 <div class="lista-retete">
+  <!-- BONUS 3: Mesaj lipsă produse -->
+  <div id="mesaj-nu-exista" style="display:none; color:#b00; font-weight:bold; font-size:1.2em; margin:2em auto; text-align:center;">Nu există produse conform filtrării curente.</div>
   <% function formatData(data) {
     if (!data) return '';
     const luni = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
@@ -119,10 +139,38 @@
     </article>
   <% }) %>
 </div>
+
+<!-- PAGINARE BONUS 5 -->
+<% if (nrPagini > 1) { %>
+  <nav class="paginare" aria-label="Paginare rețete">
+    <% for(let i=1; i<=nrPagini; i++) { %>
+      <% if(i === paginaCurenta) { %>
+        <span class="pagina-curenta"><%= i %></span>
+      <% } else { %>
+        <a href="?pagina=<%= i %><%= categorieSelectata ? `&categorie=${encodeURIComponent(categorieSelectata)}` : '' %><%= sort ? `&sort=${encodeURIComponent(sort)}` : '' %>" class="pagina-link"><%= i %></a>
+      <% } %>
+    <% } %>
+  </nav>
+<% } %>
 <%- include('../fragmente/footer.ejs') %>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  // --- BONUS 2: Tema ---
+  const selectTema = document.getElementById("select-tema");
+  function aplicaTema(tema) {
+    document.body.classList.remove("theme-light", "theme-dark", "theme-purple");
+    document.body.classList.add("theme-" + tema);
+    localStorage.setItem("tema", tema);
+  }
+  selectTema.addEventListener("change", function() {
+    aplicaTema(this.value);
+  });
+  // La încărcare
+  const temaSalvata = localStorage.getItem("tema") || "light";
+  aplicaTema(temaSalvata);
+  selectTema.value = temaSalvata;
+
   const textareaCuvinte = document.getElementById('filtru-cuvinte');
   const checkboxDiv = document.getElementById('checkbox-ingrediente');
   const selectComplexitate = document.getElementById('select-complexitate');
@@ -150,6 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const valIngredientPrincipal = inputIngredientPrincipal.value.trim().toLowerCase();
     const valRapida = inputRapida.checked;
 
+    let nrVizibile = 0;
     articole.forEach(art => {
       let show = true;
       // a. Cuvinte cheie în descriere (oricare, subșir)
@@ -181,9 +230,14 @@ document.addEventListener("DOMContentLoaded", function() {
       // g. Rapidă (vechi)
       if (valRapida && art.getAttribute('data-rapida') !== 'da') show = false;
       art.style.display = show ? '' : 'none';
+      if(show) nrVizibile++;
     });
+    // --- BONUS 3: Mesaj lipsă produse ---
+    const mesajNuExista = document.getElementById('mesaj-nu-exista');
+    mesajNuExista.style.display = nrVizibile === 0 ? '' : 'none';
   }
 
+  // --- BONUS 4: Toate filtrele aplică efectul la oninput/onchange, nu doar la click pe buton ---
   textareaCuvinte.addEventListener('input', filtreaza);
   checkboxDiv.addEventListener('change', filtreaza);
   selectComplexitate.addEventListener('change', filtreaza);
@@ -194,5 +248,80 @@ document.addEventListener("DOMContentLoaded", function() {
   inputRapida.addEventListener('change', filtreaza);
 
   filtreaza(); // inițial
+
+  // --- BUTOANE cerinta 8 ---
+  const btnFiltreaza = document.getElementById('btn-filtreaza');
+  const btnSortAsc = document.getElementById('btn-sort-asc');
+  const btnSortDesc = document.getElementById('btn-sort-desc');
+  const btnCalculeaza = document.getElementById('btn-calculeaza');
+  const btnReseteaza = document.getElementById('btn-reseteaza');
+  const listaRetete = document.querySelector('.lista-retete');
+
+  // 1. Sortare dupa doua chei: pret si numar ingrediente
+  function sorteazaRetete(asc=true) {
+    const articole = Array.from(listaRetete.querySelectorAll('article.card-reteta'));
+    articole.sort((a, b) => {
+      const pretA = parseFloat(a.getAttribute('data-pret'));
+      const pretB = parseFloat(b.getAttribute('data-pret'));
+      if (pretA !== pretB) return asc ? pretA - pretB : pretB - pretA;
+      // a doua cheie: numar ingrediente
+      const nA = (a.getAttribute('data-ingrediente')||'').split('|').filter(Boolean).length;
+      const nB = (b.getAttribute('data-ingrediente')||'').split('|').filter(Boolean).length;
+      return asc ? nA - nB : nB - nA;
+    });
+    // reordoneaza DOM-ul
+    articole.forEach(art => listaRetete.appendChild(art));
+  }
+  btnSortAsc.addEventListener('click', () => sorteazaRetete(true));
+  btnSortDesc.addEventListener('click', () => sorteazaRetete(false));
+
+  // 3. Calculeaza suma, media, minim, maxim preturi vizibile
+  btnCalculeaza.addEventListener('click', () => {
+    const articoleVizibile = Array.from(listaRetete.querySelectorAll('article.card-reteta')).filter(a => a.style.display !== 'none');
+    const preturi = articoleVizibile.map(a => parseFloat(a.getAttribute('data-pret'))).filter(x => !isNaN(x));
+    if (preturi.length === 0) return;
+    const suma = preturi.reduce((a,b) => a+b, 0);
+    const media = suma / preturi.length;
+    const minim = Math.min(...preturi);
+    const maxim = Math.max(...preturi);
+    // afiseaza intr-un div creat dinamic, pozitie fixa
+    const divRez = document.createElement('div');
+    divRez.textContent = `Suma: ${suma.toFixed(2)} | Media: ${media.toFixed(2)} | Min: ${minim} | Max: ${maxim}`;
+    divRez.style.position = 'fixed';
+    divRez.style.top = '30px';
+    divRez.style.left = '50%';
+    divRez.style.transform = 'translateX(-50%)';
+    divRez.style.background = '#fff';
+    divRez.style.color = '#222';
+    divRez.style.padding = '1em 2em';
+    divRez.style.border = '2px solid #9B59B6';
+    divRez.style.borderRadius = '1em';
+    divRez.style.zIndex = 9999;
+    divRez.style.fontWeight = 'bold';
+    document.body.appendChild(divRez);
+    setTimeout(() => divRez.remove(), 2000);
+  });
+
+  // 4. Resetare filtre
+  btnReseteaza.addEventListener('click', () => {
+    if (confirm('Sigur doriți să resetați toate filtrele?')) {
+      // Reseteaza toate inputurile filtrelor
+      textareaCuvinte.value = '';
+      checkboxDiv.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = true);
+      Array.from(selectComplexitate.options).forEach(opt => opt.selected = true);
+      inputCategorie.value = '';
+      inputPretMin.value = inputPretMin.min;
+      inputPretMax.value = inputPretMax.max;
+      inputIngredientPrincipal.value = '';
+      inputRapida.checked = false;
+      // Reafișează toate rețetele în ordinea inițială (resetare sortare)
+      // Reordonăm articolele după ordinea inițială din DOM
+      const articole = Array.from(listaRetete.querySelectorAll('article.card-reteta'));
+      articole.sort((a, b) => parseInt(a.getAttribute('data-id')) - parseInt(b.getAttribute('data-id')));
+      articole.forEach(art => listaRetete.appendChild(art));
+      filtreaza();
+    }
+    // Dacă apasă Cancel, nu se face nimic
+  });
 });
 </script>
