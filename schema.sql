@@ -31,4 +31,6 @@ CREATE TABLE retete_utilizator (
     id SERIAL PRIMARY KEY,
     id_utilizator INTEGER REFERENCES utilizatori(id),
     id_reteta INTEGER REFERENCES retete(id)
-); 
+);
+
+ALTER TABLE retete ADD COLUMN data_adaugare DATE; 

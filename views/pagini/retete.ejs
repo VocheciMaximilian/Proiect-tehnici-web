@@ -1,7 +1,35 @@
 <%- include('../fragmente/head.ejs') %>
 <%- include('../fragmente/header.ejs') %>
-<h1>Retete</h1>
-<form method="get" action="/retete" class="form-filtrare-sortare" style="margin-bottom:2rem; display:flex; gap:1rem; align-items:end; flex-wrap:wrap;">
+<h1>Rețete</h1>
+
+<!-- FILTRE NOI cerința 7 -->
+<section class="filtre-produse" style="margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:2rem; align-items:flex-end; border-bottom:2px solid #222; padding-bottom:1.5rem;">
+  <div>
+    <label for="filtru-cuvinte">Cuvinte cheie în descriere (virgulă):</label>
+    <textarea id="filtru-cuvinte" rows="1" placeholder="ex: carne, ciocolata, rapid" style="min-width:220px;"></textarea>
+  </div>
+  <div>
+    <span>Ingrediente (bifează cel puțin una):</span>
+    <div id="checkbox-ingrediente" style="display:flex; flex-direction:column; max-height:120px; overflow:auto; min-width:180px; border:1px solid #ccc; padding:0.5em; border-radius:0.5em;">
+      <% let toateIngredientele = Array.from(new Set(retete.flatMap(r => Array.isArray(r.ingrediente) ? r.ingrediente : []))).sort(); %>
+      <% toateIngredientele.forEach(ing => { %>
+        <label style="font-weight:normal;"><input type="checkbox" value="<%= ing %>" checked> <%= ing %></label>
+      <% }) %>
+    </div>
+  </div>
+  <div>
+    <label for="select-complexitate">Complexitate:</label>
+    <select id="select-complexitate" multiple size="3" style="min-width:120px;">
+      <% let complexitati = Array.from(new Set(retete.map(r => r.complexitate))).sort(); %>
+      <% complexitati.forEach(c => { %>
+        <option value="<%= c %>" selected><%= c %></option>
+      <% }) %>
+    </select>
+  </div>
+</section>
+
+<!-- FILTRE VECHI pentru celelalte cerințe -->
+<form method="get" action="/retete" class="form-filtrare-sortare" style="margin-bottom:2rem; display:flex; gap:1rem; align-items:end; flex-wrap:wrap;" onsubmit="return false;">
   <div>
     <label for="categorie">Categorie:</label>
     <select name="categorie" id="categorie">
@@ -10,6 +38,27 @@
         <option value="<%= cat %>" <%= (cat === categorieSelectata) ? 'selected' : '' %>><%= cat %></option>
       <% }) %>
     </select>
+  </div>
+  <div>
+    <label for="filtru-pret-min">Preț minim:</label>
+    <input type="number" name="pretMin" id="filtru-pret-min" min="<%= pretMin %>" max="<%= pretMax %>" value="<%= pretMin %>">
+  </div>
+  <div>
+    <label for="filtru-pret-max">Preț maxim:</label>
+    <input type="number" name="pretMax" id="filtru-pret-max" min="<%= pretMin %>" max="<%= pretMax %>" value="<%= pretMax %>">
+  </div>
+  <div>
+    <label for="filtru-ingredient">Ingredient principal:</label>
+    <input list="lista-ingrediente" name="ingredient" id="filtru-ingredient" placeholder="Alege ingredient...">
+    <datalist id="lista-ingrediente">
+      <% toateIngredientele.forEach(ing => { %>
+        <option value="<%= ing %>">
+      <% }) %>
+    </datalist>
+  </div>
+  <div>
+    <label for="filtru-rapida">Doar rețete rapide</label>
+    <input type="checkbox" name="rapida" id="filtru-rapida">
   </div>
   <div>
     <label for="sort">Sortează după:</label>
@@ -22,17 +71,128 @@
   </div>
   <button type="submit">Filtrează / Sortează</button>
 </form>
+
 <div class="lista-retete">
+  <% function formatData(data) {
+    if (!data) return '';
+    const luni = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
+    const zile = ['Duminică','Luni','Marți','Miercuri','Joi','Vineri','Sâmbătă'];
+    const d = new Date(data);
+    return `${d.getDate()}(${zile[d.getDay()]})/${luni[d.getMonth()]}/${d.getFullYear()}`;
+  } %>
   <% retete.forEach(r => { %>
-    <div class="card-reteta">
+    <article class="card-reteta" data-descriere="<%= (r.descriere||'').replace(/"/g,'&quot;') %>" data-ingrediente="<%= Array.isArray(r.ingrediente) ? r.ingrediente.join('|') : '' %>" data-complexitate="<%= r.complexitate %>" data-rapida="<%= r.este_rapida ? 'da' : 'nu' %>" data-categorie="<%= r.categorie %>" data-pret="<%= r.pret %>" data-ingredient-principal="<%= Array.isArray(r.ingrediente) ? r.ingrediente[0] : '' %>">
       <h2><%= r.nume %></h2>
-      <img src="/<%= r.imagine %>" alt="<%= r.nume %>" class="img-reteta">
-      <p>Categorie: <%= r.categorie %></p>
-      <p>Timp: <%= r.timp_preparare %> min</p>
-      <p>Complexitate: <%= r.complexitate %></p>
-      <p>Pret: <%= r.pret %> lei</p>
+      <div style="margin-bottom:0.5rem; color:#888; font-size:0.95em;">
+        <time datetime="<%= r.data_adaugare ? r.data_adaugare.toISOString ? r.data_adaugare.toISOString().slice(0,10) : r.data_adaugare : '' %>">
+          <%= formatData(r.data_adaugare) %>
+        </time>
+      </div>
+      <div style="display: flex; align-items: flex-start; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+        <table style="min-width: 300px; max-width: 400px;">
+          <tr>
+            <th>Data adăugare</th>
+            <th>Preț</th>
+            <th>Complexitate</th>
+            <th>Ingrediente</th>
+            <th>Timp preparare</th>
+            <th>Rapidă?</th>
+          </tr>
+          <tr>
+            <td>
+              <time datetime="<%= r.data_adaugare ? r.data_adaugare.toISOString ? r.data_adaugare.toISOString().slice(0,10) : r.data_adaugare : '' %>">
+                <%= formatData(r.data_adaugare) %>
+              </time>
+            </td>
+            <td><%= r.pret %> lei</td>
+            <td><%= r.complexitate %></td>
+            <td><%= Array.isArray(r.ingrediente) ? r.ingrediente.join(', ') : r.ingrediente %></td>
+            <td><%= r.timp_preparare %> min</td>
+            <td><%= r.este_rapida ? 'Da' : 'Nu' %></td>
+          </tr>
+        </table>
+        <img src="/<%= r.imagine %>" alt="<%= r.nume %>" class="img-reteta" style="max-width:180px; max-height:140px; object-fit:cover; border-radius:10px;">
+      </div>
+      <p style="margin-top:1rem;"><%= r.descriere || '' %></p>
+      <div style="margin-bottom:0.5rem; color:#888; font-size:0.95em;">Categorie: <%= r.categorie %></div>
       <a class="btn-detalii" href="/reteta/<%= r.id %>">Detalii</a>
-    </div>
+    </article>
   <% }) %>
 </div>
-<%- include('../fragmente/footer.ejs') %> 
+<%- include('../fragmente/footer.ejs') %>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const textareaCuvinte = document.getElementById('filtru-cuvinte');
+  const checkboxDiv = document.getElementById('checkbox-ingrediente');
+  const selectComplexitate = document.getElementById('select-complexitate');
+  const articole = document.querySelectorAll('.lista-retete article.card-reteta');
+
+  // Filtre vechi pe client
+  const inputCategorie = document.getElementById('categorie');
+  const inputPretMin = document.getElementById('filtru-pret-min');
+  const inputPretMax = document.getElementById('filtru-pret-max');
+  const inputIngredientPrincipal = document.getElementById('filtru-ingredient');
+  const inputRapida = document.getElementById('filtru-rapida');
+
+  function filtreaza() {
+    // 1. Cuvinte cheie (virgulă, subșiruri)
+    const cuvinte = textareaCuvinte.value.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+    // 2. Ingrediente bifate
+    const ingredienteBifate = Array.from(checkboxDiv.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
+    // 3. Complexități selectate
+    const complexitati = Array.from(selectComplexitate.selectedOptions).map(opt => opt.value);
+
+    // Filtre vechi
+    const valCategorie = inputCategorie.value;
+    const valPretMin = parseFloat(inputPretMin.value);
+    const valPretMax = parseFloat(inputPretMax.value);
+    const valIngredientPrincipal = inputIngredientPrincipal.value.trim().toLowerCase();
+    const valRapida = inputRapida.checked;
+
+    articole.forEach(art => {
+      let show = true;
+      // a. Cuvinte cheie în descriere (oricare, subșir)
+      if (cuvinte.length > 0) {
+        const descriere = art.getAttribute('data-descriere').toLowerCase();
+        if (!cuvinte.some(cuv => descriere.includes(cuv))) show = false;
+      }
+      // b. Ingrediente (cel puțin una bifată)
+      if (ingredienteBifate.length > 0) {
+        const ingrediente = art.getAttribute('data-ingrediente').split('|');
+        if (!ingrediente.some(ing => ingredienteBifate.includes(ing))) show = false;
+      }
+      // c. Complexitate (oricare selectată)
+      if (complexitati.length > 0) {
+        const comp = art.getAttribute('data-complexitate');
+        if (!complexitati.includes(comp)) show = false;
+      }
+      // d. Categorie (vechi)
+      if (valCategorie && art.getAttribute('data-categorie') !== valCategorie) show = false;
+      // e. Preț minim/maxim (vechi)
+      const pret = parseFloat(art.getAttribute('data-pret'));
+      if (!isNaN(valPretMin) && pret < valPretMin) show = false;
+      if (!isNaN(valPretMax) && pret > valPretMax) show = false;
+      // f. Ingredient principal (vechi)
+      if (valIngredientPrincipal) {
+        const ingPrincipal = (art.getAttribute('data-ingredient-principal') || '').toLowerCase();
+        if (!ingPrincipal.includes(valIngredientPrincipal)) show = false;
+      }
+      // g. Rapidă (vechi)
+      if (valRapida && art.getAttribute('data-rapida') !== 'da') show = false;
+      art.style.display = show ? '' : 'none';
+    });
+  }
+
+  textareaCuvinte.addEventListener('input', filtreaza);
+  checkboxDiv.addEventListener('change', filtreaza);
+  selectComplexitate.addEventListener('change', filtreaza);
+  inputCategorie.addEventListener('change', filtreaza);
+  inputPretMin.addEventListener('input', filtreaza);
+  inputPretMax.addEventListener('input', filtreaza);
+  inputIngredientPrincipal.addEventListener('input', filtreaza);
+  inputRapida.addEventListener('change', filtreaza);
+
+  filtreaza(); // inițial
+});
+</script>

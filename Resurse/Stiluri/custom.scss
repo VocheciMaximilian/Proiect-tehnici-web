@@ -121,4 +121,25 @@ header .btn-custom, nav .btn-custom {
   flex-direction: column;
   align-items: center;
   text-align: center;
-} 
+}
+
+// Stil pentru tabelele din lista de rețete
+.card-reteta table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.card-reteta th, .card-reteta td {
+  border: 1.5px solid #222;
+  padding: 0.5rem 0.7rem;
+  text-align: center;
+}
+.card-reteta th {
+  background: #111;
+  color: #fff;
+  font-weight: 600;
+}
+.card-reteta td {
+  background: #fff;
+  color: #222;
+}

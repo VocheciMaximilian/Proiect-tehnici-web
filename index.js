@@ -182,7 +182,7 @@ app.get('/retete', async (req, res) => {
         const categorii = categoriiResult.rows.map(row => row.categorie);
 
         // Filtrare și sortare
-        let query = 'SELECT id, nume, imagine, categorie, timp_preparare, complexitate, pret FROM retete';
+        let query = 'SELECT id, nume, descriere, imagine, categorie, timp_preparare, complexitate, pret, data_adaugare, este_rapida, ingrediente FROM retete';
         let where = [];
         let values = [];
         let order = '';
@@ -204,12 +204,34 @@ app.get('/retete', async (req, res) => {
         query += order;
 
         const result = await pool.query(query, values);
+        // Calculează pretMin și pretMax din rezultatele rețetelor
+        let pretMin = null, pretMax = null;
+        let ingredienteUnice = [];
+        if (result.rows.length > 0) {
+            const preturi = result.rows.map(r => Number(r.pret));
+            pretMin = Math.min(...preturi);
+            pretMax = Math.max(...preturi);
+            // Extrage toate ingredientele într-un array flat
+            let toateIngrediente = [];
+            result.rows.forEach(r => {
+                if (Array.isArray(r.ingrediente)) {
+                    toateIngrediente.push(...r.ingrediente);
+                } else if (typeof r.ingrediente === 'string') {
+                    toateIngrediente.push(r.ingrediente);
+                }
+            });
+            // Elimină duplicatele
+            ingredienteUnice = [...new Set(toateIngrediente)].sort();
+        }
         res.render('pagini/retete', {
             retete: result.rows,
             titluPagina: 'Rețete',
             categorii,
             categorieSelectata: req.query.categorie || '',
-            sort: req.query.sort || ''
+            sort: req.query.sort || '',
+            pretMin,
+            pretMax,
+            ingredienteUnice
         });
     } catch (err) {
         res.status(500).send('Eroare la preluarea rețetelor');
