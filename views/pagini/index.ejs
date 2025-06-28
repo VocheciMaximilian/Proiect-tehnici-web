@@ -34,10 +34,10 @@
                 <% for(let i=0;i<2;i++) { %>
                   <% if (visibleImages[idx]) { %>
                     <figure class="galerie-item">
-                      <img src="<%= visibleImages[idx].cale_relativa %>" alt="<%= visibleImages[idx].alternativ %>" title="<%= visibleImages[idx].descriere_imag %>">
+                      <img src="<%= visibleImages[idx].cale_relativa %>" alt="<%= visibleImages[idx].alternativ %>">
+                      <div class="custom-tooltip"><%= visibleImages[idx].descriere_imag %></div>
                       <figcaption>
                         <h3><%= (idx+1).toString().padStart(2, '0') %>. <%= visibleImages[idx].nume_imag %></h3>
-                        <p><%= visibleImages[idx].descriere_imag %></p>
                         <% if (visibleImages[idx].attribution) { %>
                           <small style="display:block;font-style:italic;margin-top:0.3em;opacity:0.7;">
                             <%= visibleImages[idx].attribution %>
@@ -53,10 +53,10 @@
               <% } else if (pattern === 1 || pattern === 3) { %>
                 <% if (visibleImages[idx]) { %>
                   <figure class="galerie-item">
-                    <img src="<%= visibleImages[idx].cale_relativa %>" alt="<%= visibleImages[idx].alternativ %>" title="<%= visibleImages[idx].descriere_imag %>">
+                    <img src="<%= visibleImages[idx].cale_relativa %>" alt="<%= visibleImages[idx].alternativ %>">
+                    <div class="custom-tooltip"><%= visibleImages[idx].descriere_imag %></div>
                     <figcaption>
                       <h3><%= (idx+1).toString().padStart(2, '0') %>. <%= visibleImages[idx].nume_imag %></h3>
-                      <p><%= visibleImages[idx].descriere_imag %></p>
                       <% if (visibleImages[idx].attribution) { %>
                         <small style="display:block;font-style:italic;margin-top:0.3em;opacity:0.7;">
                           <%= visibleImages[idx].attribution %>
@@ -71,10 +71,10 @@
                 <div class="gol"></div>
                 <% if (visibleImages[idx]) { %>
                   <figure class="galerie-item">
-                    <img src="<%= visibleImages[idx].cale_relativa %>" alt="<%= visibleImages[idx].alternativ %>" title="<%= visibleImages[idx].descriere_imag %>">
+                    <img src="<%= visibleImages[idx].cale_relativa %>" alt="<%= visibleImages[idx].alternativ %>">
+                    <div class="custom-tooltip"><%= visibleImages[idx].descriere_imag %></div>
                     <figcaption>
                       <h3><%= (idx+1).toString().padStart(2, '0') %>. <%= visibleImages[idx].nume_imag %></h3>
-                      <p><%= visibleImages[idx].descriere_imag %></p>
                       <% if (visibleImages[idx].attribution) { %>
                         <small style="display:block;font-style:italic;margin-top:0.3em;opacity:0.7;">
                           <%= visibleImages[idx].attribution %>
@@ -90,10 +90,10 @@
                 <% for(let i=0;i<2;i++) { %>
                   <% if (visibleImages[idx]) { %>
                     <figure class="galerie-item">
-                      <img src="<%= visibleImages[idx].cale_relativa %>" alt="<%= visibleImages[idx].alternativ %>" title="<%= visibleImages[idx].descriere_imag %>">
+                      <img src="<%= visibleImages[idx].cale_relativa %>" alt="<%= visibleImages[idx].alternativ %>">
+                      <div class="custom-tooltip"><%= visibleImages[idx].descriere_imag %></div>
                       <figcaption>
                         <h3><%= (idx+1).toString().padStart(2, '0') %>. <%= visibleImages[idx].nume_imag %></h3>
-                        <p><%= visibleImages[idx].descriere_imag %></p>
                         <% if (visibleImages[idx].attribution) { %>
                           <small style="display:block;font-style:italic;margin-top:0.3em;opacity:0.7;">
                             <%= visibleImages[idx].attribution %>
