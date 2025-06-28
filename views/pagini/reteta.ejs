@@ -1,0 +1,21 @@
+<%- include('../fragmente/head.ejs') %>
+<%- include('../fragmente/header.ejs') %>
+<div class="detaliu-reteta">
+  <h1><%= reteta.nume %></h1>
+  <% if (reteta.imagine) { %>
+    <img src="/<%= reteta.imagine %>" alt="<%= reteta.nume %>" class="img-reteta" style="max-width:400px;">
+  <% } %>
+  <p><%= reteta.descriere %></p>
+  <p><strong>Categorie:</strong> <%= reteta.categorie %> / <%= reteta.subcategorie %></p>
+  <p><strong>Mod categorizare:</strong> <%= reteta.mod_categorizare %></p>
+  <p><strong>Pret:</strong> <%= reteta.pret %> lei</p>
+  <p><strong>Timp preparare:</strong> <%= reteta.timp_preparare %> min</p>
+  <p><strong>Portii:</strong> <%= reteta.portii %></p>
+  <p><strong>Complexitate:</strong> <%= reteta.complexitate %></p>
+  <p><strong>Ingrediente:</strong> <%= Array.isArray(reteta.ingrediente) ? reteta.ingrediente.join(', ') : reteta.ingrediente %></p>
+  <p><strong>Echipamente:</strong> <%= Array.isArray(reteta.echipamente) ? reteta.echipamente.join(', ') : reteta.echipamente %></p>
+  <p><strong>Este rapida:</strong> <%= reteta.este_rapida ? 'Da' : 'Nu' %></p>
+  <p><strong>Aprecieri:</strong> <%= reteta.aprecieri %></p>
+  <p><strong>Instructiuni:</strong> <%= reteta.instructiuni %></p>
+</div>
+<%- include('../fragmente/footer.ejs') %> 

@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const sass = require('sass');
+const { Pool } = require('pg');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -13,6 +14,14 @@ const galerieData = JSON.parse(fs.readFileSync(path.join(__dirname, 'galerie_dat
 global.folderScss = path.join(__dirname, 'Resurse', 'Stiluri');
 global.folderCss = path.join(__dirname, 'Resurse', 'Stiluri');
 global.folderBackup = path.join(global.folderCss, 'backup');
+
+const pool = new Pool({
+    user: 'postgres', // modifică după caz
+    host: 'localhost',
+    database: 'retete_db',
+    password: '1406', // modifică după caz
+    port: 5432
+});
 
 // Initializare erori
 function initErori() {
@@ -163,6 +172,61 @@ app.get(['/', '/index', '/home'], (req, res) => {
         ip: req.ip,
         galerie_gatit: { galerie: filteredGalerie }
     });
+});
+
+// Ruta pentru listare rețete
+app.get('/retete', async (req, res) => {
+    try {
+        // Preluare categorii distincte pentru dropdown
+        const categoriiResult = await pool.query('SELECT DISTINCT categorie FROM retete');
+        const categorii = categoriiResult.rows.map(row => row.categorie);
+
+        // Filtrare și sortare
+        let query = 'SELECT id, nume, imagine, categorie, timp_preparare, complexitate, pret FROM retete';
+        let where = [];
+        let values = [];
+        let order = '';
+
+        // Filtrare după categorie
+        if (req.query.categorie && req.query.categorie !== '') {
+            where.push('categorie = $' + (values.length + 1));
+            values.push(req.query.categorie);
+        }
+
+        if (where.length > 0) {
+            query += ' WHERE ' + where.join(' AND ');
+        }
+
+        // Sortare
+        if (req.query.sort === 'pret' || req.query.sort === 'timp_preparare' || req.query.sort === 'nume') {
+            order = ' ORDER BY ' + req.query.sort;
+        }
+        query += order;
+
+        const result = await pool.query(query, values);
+        res.render('pagini/retete', {
+            retete: result.rows,
+            titluPagina: 'Rețete',
+            categorii,
+            categorieSelectata: req.query.categorie || '',
+            sort: req.query.sort || ''
+        });
+    } catch (err) {
+        res.status(500).send('Eroare la preluarea rețetelor');
+    }
+});
+
+// Ruta pentru detalii rețetă
+app.get('/reteta/:id', async (req, res) => {
+    try {
+        const result = await pool.query(
+            'SELECT * FROM retete WHERE id = $1', [req.params.id]
+        );
+        if (result.rows.length === 0) return res.status(404).send('Rețetă inexistentă');
+        res.render('pagini/reteta', { reteta: result.rows[0], titluPagina: result.rows[0].nume });
+    } catch (err) {
+        res.status(500).send('Eroare la preluarea rețetei');
+    }
 });
 
 // Rute dinamice pentru orice pagina

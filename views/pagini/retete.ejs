@@ -1,0 +1,38 @@
+<%- include('../fragmente/head.ejs') %>
+<%- include('../fragmente/header.ejs') %>
+<h1>Retete</h1>
+<form method="get" action="/retete" class="form-filtrare-sortare" style="margin-bottom:2rem; display:flex; gap:1rem; align-items:end; flex-wrap:wrap;">
+  <div>
+    <label for="categorie">Categorie:</label>
+    <select name="categorie" id="categorie">
+      <option value="">Toate</option>
+      <% categorii.forEach(cat => { %>
+        <option value="<%= cat %>" <%= (cat === categorieSelectata) ? 'selected' : '' %>><%= cat %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div>
+    <label for="sort">Sortează după:</label>
+    <select name="sort" id="sort">
+      <option value="">Implicit</option>
+      <option value="pret" <%= sort === 'pret' ? 'selected' : '' %>>Preț</option>
+      <option value="timp_preparare" <%= sort === 'timp_preparare' ? 'selected' : '' %>>Timp preparare</option>
+      <option value="nume" <%= sort === 'nume' ? 'selected' : '' %>>Nume</option>
+    </select>
+  </div>
+  <button type="submit">Filtrează / Sortează</button>
+</form>
+<div class="lista-retete">
+  <% retete.forEach(r => { %>
+    <div class="card-reteta">
+      <h2><%= r.nume %></h2>
+      <img src="/<%= r.imagine %>" alt="<%= r.nume %>" class="img-reteta">
+      <p>Categorie: <%= r.categorie %></p>
+      <p>Timp: <%= r.timp_preparare %> min</p>
+      <p>Complexitate: <%= r.complexitate %></p>
+      <p>Pret: <%= r.pret %> lei</p>
+      <a class="btn-detalii" href="/reteta/<%= r.id %>">Detalii</a>
+    </div>
+  <% }) %>
+</div>
+<%- include('../fragmente/footer.ejs') %> 
