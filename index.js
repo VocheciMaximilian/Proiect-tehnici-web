@@ -258,7 +258,21 @@ app.get('/reteta/:id', async (req, res) => {
             'SELECT * FROM retete WHERE id = $1', [req.params.id]
         );
         if (result.rows.length === 0) return res.status(404).send('Rețetă inexistentă');
-        res.render('pagini/reteta', { reteta: result.rows[0], titluPagina: result.rows[0].nume });
+        const reteta = result.rows[0];
+        // Alege 3 imagini random din folderul Resurse/images
+        const imgDir = path.join(__dirname, 'Resurse', 'images');
+        let toateImaginile = fs.readdirSync(imgDir)
+            .filter(f => f.match(/\.(jpg|jpeg|png)$/i))
+            .map(f => 'Resurse/images/' + f);
+        // Elimină duplicate și imaginea principală dacă vrei
+        let imagini = [reteta.imagine];
+        let rest = toateImaginile.filter(img => img !== reteta.imagine);
+        while (imagini.length < 3 && rest.length > 0) {
+            let idx = Math.floor(Math.random() * rest.length);
+            imagini.push(rest[idx]);
+            rest.splice(idx, 1);
+        }
+        res.render('pagini/reteta', { reteta, imagini, titluPagina: reteta.nume });
     } catch (err) {
         res.status(500).send('Eroare la preluarea rețetei');
     }

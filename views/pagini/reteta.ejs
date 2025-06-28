@@ -2,8 +2,26 @@
 <%- include('../fragmente/header.ejs') %>
 <div class="detaliu-reteta">
   <h1><%= reteta.nume %></h1>
-  <% if (reteta.imagine) { %>
-    <img src="/<%= reteta.imagine %>" alt="<%= reteta.nume %>" class="img-reteta" style="max-width:400px;">
+  <% if (imagini && imagini.length > 1) { %>
+    <div id="carouselImagini" class="carousel slide" data-bs-ride="carousel" style="max-width:400px; margin:auto;">
+      <div class="carousel-inner">
+        <% imagini.forEach(function(img, idx) { %>
+          <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
+            <img src="/<%= img %>" class="d-block w-100 img-reteta" alt="<%= reteta.nume %>" style="max-width:400px;">
+          </div>
+        <% }); %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselImagini" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselImagini" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  <% } else if (imagini && imagini.length === 1) { %>
+    <img src="/<%= imagini[0] %>" alt="<%= reteta.nume %>" class="img-reteta" style="max-width:400px;">
   <% } %>
   <p><%= reteta.descriere %></p>
   <p><strong>Categorie:</strong> <%= reteta.categorie %> / <%= reteta.subcategorie %></p>
