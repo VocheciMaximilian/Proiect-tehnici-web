@@ -6,7 +6,7 @@ const sass = require('sass');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Globale
+// Variabile globale
 const obGlobal = { obErori: null };
 const galerieData = JSON.parse(fs.readFileSync(path.join(__dirname, 'galerie_data.json'), 'utf8'));
 
@@ -14,7 +14,7 @@ global.folderScss = path.join(__dirname, 'Resurse', 'Stiluri');
 global.folderCss = path.join(__dirname, 'Resurse', 'Stiluri');
 global.folderBackup = path.join(global.folderCss, 'backup');
 
-// Inițializare erori
+// Initializare erori
 function initErori() {
     const eroriRaw = fs.readFileSync(path.join(__dirname, 'erori.json'), 'utf-8');
     const conf = JSON.parse(eroriRaw);
@@ -39,7 +39,7 @@ function initErori() {
 }
 initErori();
 
-// Creare foldere temp
+// Creare foldere temporare
 const vect_foldere = ['temp'];
 vect_foldere.forEach(f => {
     const full = path.join(__dirname, f);
@@ -109,12 +109,12 @@ function setupScssWatcher() {
             const scssPath = path.join(global.folderScss, filename);
             const cssPath = path.join(global.folderCss, path.basename(filename, '.scss') + '.css');
 
-            // Verifică dacă fișierul SCSS există (nu a fost șters)
+            // Verifica daca fisierul SCSS exista (nu a fost sters)
             if (fs.existsSync(scssPath)) {
                 console.log(`[SASS] Change detected (${eventType}): ${filename}`);
                 await compileazaScss(scssPath, cssPath);
-            } else if (eventType === 'rename') { // Poate indica o ștergere sau redenumire
-                // Dacă fișierul SCSS a fost șters, poți șterge și CSS-ul corespunzător
+            } else if (eventType === 'rename') { // Poate indica o stergere sau redenumire
+                // Daca fisierul SCSS a fost sters, poti sterge si CSS-ul corespunzator
                 const cssToDelete = path.join(global.folderCss, path.basename(filename, '.scss') + '.css');
                 if (fs.existsSync(cssToDelete)) {
                     try {
@@ -179,7 +179,7 @@ app.get('/*', (req, res) => {
     });
 });
 
-// Funcție afișare eroare
+// Functie afisare eroare
 function afisareEroare(res, identificator = 0, titluArg, textArg, imgArg) {
     const conf = obGlobal.obErori;
     let e = conf.info[identificator];

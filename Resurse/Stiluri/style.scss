@@ -1,20 +1,19 @@
 @use "sass:color";
 
-// NOU: Variabile Bootstrap personalizate, definite ÎNAINTE de importul Bootstrap
+// NOU: Variabile Bootstrap personalizate, definite INAINTE de importul Bootstrap
 // Acestea sunt variabile Sass, nu CSS custom properties
 $primary: #9B59B6;
 $secondary: #2ECC71;
-$border-radius: 0.5rem; // Ajustat la 0.5rem pentru consistență cu var(--border-radius)
-$font-family-sans-serif: 'Poppins', sans-serif; // Setat la fontul Poppins, care este deja în proiect
-
+$border-radius: 0.5rem; // Ajustat la 0.5rem pentru consistenta cu var(--border-radius)
+$font-family-sans-serif: 'Poppins', sans-serif; // Setat la fontul Poppins, care este deja in proiect
 $light: #fdfdff; // Un alb aproape pur
-$dark: #2C3E50; // Un gri închis
+$dark: #2C3E50; // Un gri inchis
 $body-color: #34495E; // Culoarea textului principal
 
 // Dimensiunea literelor heading-urilor
 $h1-font-size: 2.8rem;
 $h2-font-size: 2.2rem;
-$h3-font-size: 1.8rem; // Adăugat și h3 pentru consistență
+$h3-font-size: 1.8rem; // Adaugat si h3 pentru consistenta
 
 // Dimensiuni de ecran (breakpoints)
 $grid-breakpoints: (
@@ -27,7 +26,7 @@ $grid-breakpoints: (
 );
 
 // Încă o variabilă aleasă de voi (exemplu: o culoare pentru link-uri)
-$link-color: $primary; // Link-urile vor folosi culoarea primară
+$link-color: $primary; // Link-urile vor folosi culoarea primara
 
 // Acum importăm Bootstrap, care va folosi variabilele definite mai sus
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
@@ -694,20 +693,20 @@ main a:not([href^="http"]):active {
   font-weight: bold;
 }
 
-// NOU: Stiluri pentru containerul principal al efectelor și galeriei
+// NOU: Stiluri pentru containerul principal al efectelor si galeriei
 #efecte-si-galerie-container {
-  grid-area: efecte-si-galerie; // Asignează-l la noua zonă
-  display: grid; // Fă din acest container o grilă în sine
-  grid-template-columns: 1fr 1fr; // Două coloane egale pentru efecte și galerie
-  grid-gap: var(--spacing-medium); // Spațiu între cele două coloane
-  padding: var(--padding-text); // Adaugă padding la această secțiune
-  background-color: var(--background-light); // Folosește culoarea de fundal a paginii
+  grid-area: efecte-si-galerie; // Asigneaza-l la noua zona
+  display: grid; // Fa din acest container o grila in sine
+  grid-template-columns: 1fr 1fr; // Doua coloane egale pentru efecte si galerie
+  grid-gap: var(--spacing-medium); // Spatiu intre cele doua coloane
+  padding: var(--padding-text); // Adauga padding la aceasta sectiune
+  background-color: var(--background-light); // Foloseste culoarea de fundal a paginii
   border-radius: var(--border-radius);
   margin-bottom: var(--spacing-medium);
 }
 
 .efecte-css-wrapper {
-  // Stiluri pentru partea stângă (efecte)
+  // Stiluri pentru partea stanga (efecte)
 }
 
 .galerie-statica-wrapper, .galerie-container {
@@ -717,7 +716,7 @@ main a:not([href^="http"]):active {
   padding: 0;
 }
 
-// NOU: Stiluri pentru Galerie Statică
+// NOU: Stiluri pentru Galerie Statica
 .galerie-container {
   width: 100%;
   display: grid;
@@ -736,10 +735,10 @@ main a:not([href^="http"]):active {
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  height: 450px; // NOU: Înălțime fixă ajustată la cerință (400-500px)
+  height: 450px; // NOU: Inaltime fixa ajustata la cerinta (400-500px)
   cursor: pointer;
   transition: all 0.2s ease;
-  counter-increment: galerie-index; // NOU: Incrementează contorul pentru fiecare element
+  counter-increment: galerie-index; // NOU: Incrementeaza contorul pentru fiecare element
 }
 
 .galerie-item img {
@@ -826,10 +825,10 @@ main a:not([href^="http"]):active {
   }
 }
 
-// NOU: Stiluri pentru afișarea contorului
+// NOU: Stiluri pentru afisarea contorului
 .galerie-item figcaption h3 .galerie-index-counter {
   &::before {
-    content: counter(galerie-index, decimal-leading-zero) ". "; // Afișează indexul cu zero-leading
+    content: counter(galerie-index, decimal-leading-zero) ". "; // Afiseaza indexul cu zero-leading
     margin-right: 0.2em;
   }
 }
