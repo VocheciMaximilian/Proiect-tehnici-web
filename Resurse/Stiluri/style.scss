@@ -25,10 +25,10 @@ $grid-breakpoints: (
         xxl: 1450px
 );
 
-// Încă o variabilă aleasă de voi (exemplu: o culoare pentru link-uri)
+// Inca o variabila aleasa de voi (exemplu: o culoare pentru link-uri)
 $link-color: $primary; // Link-urile vor folosi culoarea primara
 
-// Acum importăm Bootstrap, care va folosi variabilele definite mai sus
+// Acum importam Bootstrap, care va folosi variabilele definite mai sus
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 // RESET CSS (Meyer reset)
@@ -796,7 +796,7 @@ main a:not([href^="http"]):active {
   justify-content: center;
   color: #fff;
   text-align: center;
-  height: 450px; // Menține înălțimea fixă, ajustată la fel ca .galerie-item
+  height: 450px; // Mentine inaltimea fixa, ajustata la fel ca .galerie-item
 
   img {
     display: none;
@@ -834,7 +834,7 @@ main a:not([href^="http"]):active {
 }
 
 
-// Ajustări responsive pentru grilă
+// Ajustari responsive pentru grila
 @media (max-width: 900px) {
   .layout-grid {
     grid-template-areas:
@@ -850,13 +850,13 @@ main a:not([href^="http"]):active {
     width: 90%;
   }
   #efecte-si-galerie-container {
-    grid-template-columns: 1fr; // Pe ecrane medii, stivuiește efectele și galeria
+    grid-template-columns: 1fr; // Pe ecrane medii, stivuiete efectele si galeria
   }
   .galerie-container {
     grid-template-columns: repeat(2, 1fr); // 2 columns on medium screens
   }
   .galerie-item {
-    height: 350px; // Înălțime ajustată pentru ecrane medii
+    height: 350px; // Inaltime ajustata pentru ecrane medii
   }
 }
 
@@ -886,12 +886,12 @@ main a:not([href^="http"]):active {
     }
   }
   #efecte-si-galerie-container {
-    grid-template-columns: 1fr; // Pe ecrane mici, stivuiește efectele și galeria
+    grid-template-columns: 1fr; // Pe ecrane mici, stivuiete efectele si galeria
   }
   .galerie-container {
     grid-template-columns: 1fr; // 1 column on small screens
   }
   .galerie-item {
-    height: 300px; // Înălțime ajustată pentru ecrane mici
+    height: 300px; // Inaltime ajustata pentru ecrane mici
   }
 }

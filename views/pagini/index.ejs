@@ -9,7 +9,7 @@
         <h2>Galerie Statică</h2>
         <div class="galerie-container">
             <% 
-            // Filter visible images for the current hour
+            // Filtreaza imaginile vizibile pentru ora curenta
             const galerieData = galerie_gatit.galerie;
             const currentTime = new Date();
             const currentHour = currentTime.getHours();
@@ -18,7 +18,7 @@
                     return currentHour >= interval[0] && currentHour < interval[1];
                 });
             });
-            // zig-zag: group images into rows of 3 and reverse every even row
+            // zig-zag: grupeaza imaginile in randuri de 3 si inverseaza fiecare rand par
             function chunkArray(array, size) {
                 const result = [];
                 for (let i = 0; i < array.length; i += size) {
@@ -29,7 +29,7 @@
             const rows = chunkArray(visibleImages, 3);
             let globalIdx = 0;
             rows.forEach(function(row, rowIdx) {
-                // zig-zag: reverse every even row (1-based)
+                // zig-zag: inverseaza fiecare rand par (1-based)
                 if (rowIdx % 2 === 1) row.reverse();
                 row.forEach(function(imagine) {
             %>
@@ -72,14 +72,14 @@
             </article>
         </div>
     </section>
-    <!-- ZONA 1: Rețete -->
+    <!-- ZONA 1: Retete -->
     <section id="zona1">
-        <h2>Rețete</h2>
+        <h2>Retete</h2>
 
         <!-- Aperitive -->
         <article>
             <h3>Aperitive</h3>
-            <p>Gustări ușor de preparat pentru orice ocazie.</p>
+            <p>Gustari usor de preparat pentru orice ocazie.</p>
             <figure>
                 <picture>
                     <source srcset="/resurse/images/12387.jpg" media="(max-width: 600px)">
@@ -93,56 +93,56 @@
         <!-- Feluri Principale -->
         <article>
             <h3>Feluri Principale</h3>
-            <p>Rețete delicioase și variate pentru mesele principale ale zilei.</p>
+            <p>Retete delicioase si variate pentru mesele principale ale zilei.</p>
             <figure>
                 <picture>
                     <source srcset="/resurse/images/19956.jpg" media="(max-width: 600px)">
                     <source srcset="/resurse/images/19956(1).jpg" media="(max-width: 1200px)">
                     <img src="/resurse/images/19956(2).jpg" alt="Feluri principale consistente">
                 </picture>
-                <figcaption>Mâncăruri sățioase și gustoase pentru mesele principale.</figcaption>
+                <figcaption>Mancaruri satioase si gustoase pentru mesele principale.</figcaption>
             </figure>
         </article>
 
         <!-- Deserturi -->
         <article>
             <h3>Deserturi</h3>
-            <p>Înveselește-ți ziua cu deserturi savuroase.</p>
+            <p>Inveselește-ti ziua cu deserturi savuroase.</p>
             <figure>
                 <picture>
                     <source srcset="/resurse/images/14508.jpg" media="(max-width: 600px)">
                     <source srcset="/resurse/images/14508(1).jpg" media="(max-width: 1200px)">
-                    <img src="/resurse/images/14508(2).jpg" alt="Deserturi dulci și aromate">
+                    <img src="/resurse/images/14508(2).jpg" alt="Deserturi dulci si aromate">
                 </picture>
-                <figcaption>Prăjituri, tarte și alte dulciuri perfecte pentru orice moment.</figcaption>
+                <figcaption>Prajituri, tarte si alte dulciuri perfecte pentru orice moment.</figcaption>
             </figure>
         </article>
     </section>
-    <!-- ZONA 2: Tabel cu 10 Rețete -->
+    <!-- ZONA 2: Tabel cu 10 Retete -->
     <section id="zona2">
-        <h2>Tabel cu 10 Rețete</h2>
+        <h2>Tabel cu 10 Retete</h2>
         <table>
-            <caption>Recomandări Găteală</caption>
+            <caption>Recomandari Gateala</caption>
             <thead>
             <tr>
                 <th>#</th>
-                <th>Nume Rețetă</th>
+                <th>Nume Reteta</th>
                 <th>Categorie</th>
                 <th>Timp (min)</th>
-                <th>Observații</th>
+                <th>Observatii</th>
             </tr>
             </thead>
             <tbody>
-            <tr><td>1</td><td>Bruschete cu roșii</td><td>Aperitive</td><td>15</td><td>Se servesc calde</td></tr>
-            <tr><td>2</td><td>Salată de vinete</td><td>Aperitive</td><td>20</td><td>Se poate congela</td></tr>
-            <tr><td>3</td><td>Tocăniță de pui</td><td>Feluri Principale</td><td>45</td><td>Poate fi picantă</td></tr>
-            <tr><td>4</td><td>Friptură de porc la cuptor</td><td>Feluri Principale</td><td>60</td><td>Se marinează înainte</td></tr>
-            <tr><td>5</td><td>Cheesecake cu fructe</td><td>Desert</td><td>30</td><td>Rapid și răcoros</td></tr>
-            <tr><td>6</td><td>Clătite cu ciocolată</td><td>Desert</td><td>20</td><td>Pentru toate vârstele</td></tr>
-            <tr><td>7</td><td>Omletă cu legume</td><td>Rapide</td><td>10</td><td>Ideală pentru mic dejun</td></tr>
-            <tr><td>8</td><td>Sandviș cu șuncă și cașcaval</td><td>Rapide</td><td>5</td><td>Perfect pentru gustare</td></tr>
-            <tr><td>9</td><td>Sarmale tradiționale</td><td>Populare</td><td>90</td><td>Se servesc cu smântână</td></tr>
-            <tr><td>10</td><td>Mici la grătar</td><td>Populare</td><td>15</td><td>Nelipsiți la grătar</td></tr>
+            <tr><td>1</td><td>Bruschete cu rosii</td><td>Aperitive</td><td>15</td><td>Se servesc calde</td></tr>
+            <tr><td>2</td><td>Salata de vinete</td><td>Aperitive</td><td>20</td><td>Se poate congela</td></tr>
+            <tr><td>3</td><td>Tocanita de pui</td><td>Feluri Principale</td><td>45</td><td>Poate fi picanta</td></tr>
+            <tr><td>4</td><td>Friptura de porc la cuptor</td><td>Feluri Principale</td><td>60</td><td>Se marineaza inainte</td></tr>
+            <tr><td>5</td><td>Cheesecake cu fructe</td><td>Desert</td><td>30</td><td>Rapid si racoros</td></tr>
+            <tr><td>6</td><td>Clatite cu ciocolata</td><td>Desert</td><td>20</td><td>Pentru toate varstele</td></tr>
+            <tr><td>7</td><td>Omleta cu legume</td><td>Rapide</td><td>10</td><td>Ideala pentru mic dejun</td></tr>
+            <tr><td>8</td><td>Sandvis cu sunca si cascaval</td><td>Rapide</td><td>5</td><td>Perfect pentru gustare</td></tr>
+            <tr><td>9</td><td>Sarmale traditionale</td><td>Populare</td><td>90</td><td>Se servesc cu smantana</td></tr>
+            <tr><td>10</td><td>Mici la gratar</td><td>Populare</td><td>15</td><td>Nelipsiti la gratar</td></tr>
             </tbody>
         </table>
     </section>
@@ -155,38 +155,38 @@
             <tbody>
             <tr><td>Aprilie</td><td>21</td><td>Floriile</td></tr>
             <tr><td>Aprilie</td><td>28</td><td>Vinerea Mare</td></tr>
-            <tr><td>Aprilie</td><td>29</td><td>Sâmbăta Mare</td></tr>
-            <tr><td>Aprilie</td><td>30</td><td>Paște Ortodox</td></tr>
-            <tr><td>Mai</td><td>01</td><td>A doua zi de Paște</td></tr>
+            <tr><td>Aprilie</td><td>29</td><td>Sambata Mare</td></tr>
+            <tr><td>Aprilie</td><td>30</td><td>Paste Ortodox</td></tr>
+            <tr><td>Mai</td><td>01</td><td>A doua zi de Paste</td></tr>
             </tbody>
         </table>
     </section>
 
-    <!-- ZONA 4: Anunțuri -->
+    <!-- ZONA 4: Anunturi -->
     <section id="zona4">
-        <h2>Anunțuri</h2>
-        <p>Aici puteți găsi ultimele anunțuri legate de site și evenimente.</p>
+        <h2>Anunturi</h2>
+        <p>Aici puteti gasi ultimele anunturi legate de site si evenimente.</p>
     </section>
 
     <!-- ZONA 5: Utilizatori Online -->
     <section id="zona5">
         <h2>Utilizatori Online</h2>
-        <p>Numărul de utilizatori conectați în acest moment: 42</p>
+        <p>Numarul de utilizatori conectati in acest moment: 42</p>
     </section>
 
-    <!-- ZONA 6: Date despre utilizator și statistici -->
+    <!-- ZONA 6: Date despre utilizator si statistici -->
     <section id="zona6">
-        <h2>Date despre utilizator și statistici</h2>
-        <p>IP-ul tău: <%= ip %></p>
+        <h2>Date despre utilizator si statistici</h2>
+        <p>IP-ul tau: <%= ip %></p>
     </section>
 
-    <!-- ZONA 7: Date despre site și server -->
+    <!-- ZONA 7: Date despre site si server -->
     <section id="zona7">
-        <h2>Date despre site și server</h2>
-        <p>Informații tehnice despre server, uptime și alte detalii relevante.</p>
+        <h2>Date despre site si server</h2>
+        <p>Informatii tehnice despre server, uptime si alte detalii relevante.</p>
     </section>
 
-    <!-- ZONA 8: Secțiuni interne -->
+    <!-- ZONA 8: Sectiuni interne -->
     <section id="zona8">
     </section>
     </main>

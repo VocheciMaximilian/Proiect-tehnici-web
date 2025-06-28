@@ -2,129 +2,132 @@
 <%- include('../fragmente/header.ejs') %>
 <h1>Rețete</h1>
 
+<!-- BONUS 15: Numar total produse afisate -->
+<div style="background:#ffe066; color:#b85c00; font-weight:bold; padding:0.4em 1em; border-radius:8px; margin-bottom:0.7em; border:2px solid #b85c00; font-size:1.1em;">
+  Total produse afisate: <%= retete.length %>
+</div>
+<!-- END BONUS 15 -->
+
 <!-- BONUS 2: SELECT TEMA -->
-<div style="margin-bottom:1.5rem;">
-  <label for="select-tema" style="font-weight:bold;">Alege tema:</label>
-  <select id="select-tema" style="margin-left:0.5em;">
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
-    <option value="purple">Purple</option>
+<div style="margin-bottom:1em;">
+  <label for="select-tema" style="font-weight:bold; margin-right:0.5em;">Tema:</label>
+  <select id="select-tema" style="padding:0.3em; border-radius:5px; border:1px solid #ccc;">
+    <option value="light">Lumina</option>
+    <option value="dark">Intuneric</option>
+    <option value="purple">Mov</option>
   </select>
 </div>
 
-<!-- FILTRE NOI cerința 7 -->
-<section class="filtre-produse" style="margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:2rem; align-items:flex-end; border-bottom:2px solid #222; padding-bottom:1.5rem;">
-  <div>
-    <label for="filtru-cuvinte">Cuvinte cheie în descriere (virgulă):</label>
-    <textarea id="filtru-cuvinte" rows="1" placeholder="ex: carne, ciocolata, rapid" style="min-width:220px;"></textarea>
-  </div>
-  <div>
-    <span>Ingrediente (bifează cel puțin una):</span>
-    <div id="checkbox-ingrediente" style="display:flex; flex-direction:column; max-height:120px; overflow:auto; min-width:180px; border:1px solid #ccc; padding:0.5em; border-radius:0.5em;">
-      <% let toateIngredientele = Array.from(new Set(retete.flatMap(r => Array.isArray(r.ingrediente) ? r.ingrediente : []))).sort(); %>
-      <% toateIngredientele.forEach(ing => { %>
-        <label style="font-weight:normal;"><input type="checkbox" value="<%= ing %>" checked> <%= ing %></label>
-      <% }) %>
+<!-- FILTRE NOI cerinta 7 -->
+<div style="background:#f8f9fa; padding:1em; border-radius:8px; margin-bottom:1em;">
+  <h3>Filtre noi</h3>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:1em;">
+    <div>
+      <label for="filtru-cuvinte">Cuvinte cheie (virgula):</label>
+      <textarea id="filtru-cuvinte" placeholder="Ex: gustos, rapid, traditional" style="width:100%; padding:0.5em; border-radius:5px; border:1px solid #ccc;"></textarea>
+    </div>
+    <div>
+      <label>Ingrediente:</label>
+      <div id="checkbox-ingrediente" style="max-height:150px; overflow-y:auto; border:1px solid #ccc; padding:0.5em; border-radius:5px;">
+        <% const ingredienteUnice = [...new Set(retete.flatMap(r => Array.isArray(r.ingrediente) ? r.ingrediente : []))]; %>
+        <% ingredienteUnice.forEach(ing => { %>
+          <label style="display:block; margin-bottom:0.3em;">
+            <input type="checkbox" value="<%= ing %>" checked style="margin-right:0.5em;">
+            <%= ing %>
+          </label>
+        <% }) %>
+      </div>
+    </div>
+    <div>
+      <label for="select-complexitate">Complexitate:</label>
+      <select id="select-complexitate" multiple style="width:100%; padding:0.5em; border-radius:5px; border:1px solid #ccc;">
+        <option value="Usor" selected>Usor</option>
+        <option value="Mediu" selected>Mediu</option>
+        <option value="Dificil" selected>Dificil</option>
+      </select>
     </div>
   </div>
-  <div>
-    <label for="select-complexitate">Complexitate:</label>
-    <select id="select-complexitate" multiple size="3" style="min-width:120px;">
-      <% let complexitati = Array.from(new Set(retete.map(r => r.complexitate))).sort(); %>
-      <% complexitati.forEach(c => { %>
-        <option value="<%= c %>" selected><%= c %></option>
-      <% }) %>
-    </select>
-  </div>
-</section>
+</div>
 
-<!-- FILTRE VECHI pentru celelalte cerințe -->
-<form method="get" action="/retete" class="form-filtrare-sortare" style="margin-bottom:2rem; display:flex; gap:1rem; align-items:end; flex-wrap:wrap;" onsubmit="return false;">
-  <div>
-    <label for="categorie">Categorie:</label>
-    <select name="categorie" id="categorie" onchange="filtreaza()">
-      <option value="">Toate</option>
-      <% categorii.forEach(cat => { %>
-        <option value="<%= cat %>" <%= (cat === categorieSelectata) ? 'selected' : '' %>><%= cat %></option>
-      <% }) %>
-    </select>
+<!-- FILTRE VECHI pentru celelalte cerinte -->
+<div style="background:#e9ecef; padding:1em; border-radius:8px; margin-bottom:1em;">
+  <h3>Filtre vechi</h3>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1em;">
+    <div>
+      <label for="categorie">Categorie:</label>
+      <select id="categorie" style="width:100%; padding:0.5em; border-radius:5px; border:1px solid #ccc;">
+        <option value="">Toate</option>
+        <option value="Aperitive">Aperitive</option>
+        <option value="Feluri principale">Feluri principale</option>
+        <option value="Deserturi">Deserturi</option>
+      </select>
+    </div>
+    <div>
+      <label for="filtru-pret-min">Pret minim:</label>
+      <input type="number" id="filtru-pret-min" min="0" max="100" value="0" style="width:100%; padding:0.5em; border-radius:5px; border:1px solid #ccc;">
+    </div>
+    <div>
+      <label for="filtru-pret-max">Pret maxim:</label>
+      <input type="number" id="filtru-pret-max" min="0" max="100" value="50" style="width:100%; padding:0.5em; border-radius:5px; border:1px solid #ccc;">
+    </div>
+    <div>
+      <label for="filtru-ingredient">Ingredient principal:</label>
+      <input type="text" id="filtru-ingredient" placeholder="Ex: pui, vita" style="width:100%; padding:0.5em; border-radius:5px; border:1px solid #ccc;">
+    </div>
+    <div>
+      <label style="display:flex; align-items:center; gap:0.5em;">
+        <input type="checkbox" id="filtru-rapida">
+        Reteta rapida
+      </label>
+    </div>
   </div>
-  <div>
-    <label for="filtru-pret-min">Preț minim:</label>
-    <input type="number" name="pretMin" id="filtru-pret-min" min="<%= pretMin %>" max="<%= pretMax %>" value="<%= pretMin %>" oninput="filtreaza()">
-  </div>
-  <div>
-    <label for="filtru-pret-max">Preț maxim:</label>
-    <input type="number" name="pretMax" id="filtru-pret-max" min="<%= pretMin %>" max="<%= pretMax %>" value="<%= pretMax %>" oninput="filtreaza()">
-  </div>
-  <div>
-    <label for="filtru-ingredient">Ingredient principal:</label>
-    <input list="lista-ingrediente" name="ingredient" id="filtru-ingredient" placeholder="Alege ingredient..." oninput="filtreaza()">
-    <datalist id="lista-ingrediente">
-      <% toateIngredientele.forEach(ing => { %>
-        <option value="<%= ing %>">
-      <% }) %>
-    </datalist>
-  </div>
-  <div>
-    <label for="filtru-rapida">Doar rețete rapide</label>
-    <input type="checkbox" name="rapida" id="filtru-rapida" onchange="filtreaza()">
-  </div>
-  <div>
-    <label for="sort">Sortează după:</label>
-    <select name="sort" id="sort" onchange="filtreaza()">
-      <option value="">Implicit</option>
-      <option value="pret" <%= sort === 'pret' ? 'selected' : '' %>>Preț</option>
-      <option value="timp_preparare" <%= sort === 'timp_preparare' ? 'selected' : '' %>>Timp preparare</option>
-      <option value="nume" <%= sort === 'nume' ? 'selected' : '' %>>Nume</option>
-    </select>
-  </div>
-</form>
+</div>
 
 <!-- BUTOANE cerinta 8 -->
-<section class="butoane-filtrare-sortare" style="margin-bottom:2rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
-  <button id="btn-filtreaza" type="button" class="btn-custom">Filtrează</button>
-  <button id="btn-sort-asc" type="button" class="btn-custom">Sortează ascendent</button>
-  <button id="btn-sort-desc" type="button" class="btn-custom">Sortează descendent</button>
-  <button id="btn-calculeaza" type="button" class="btn-custom">Calculează prețuri</button>
-  <button id="btn-reseteaza" type="button" class="btn-custom">Resetează filtrele</button>
-</section>
+<div style="margin-bottom:1em;">
+  <button id="btn-filtreaza" class="btn-detalii" style="margin-right:0.5em;">Filtreaza</button>
+  <button id="btn-sort-asc" class="btn-detalii" style="margin-right:0.5em;">Sorteaza crescator</button>
+  <button id="btn-sort-desc" class="btn-detalii" style="margin-right:0.5em;">Sorteaza descrescator</button>
+  <button id="btn-calculeaza" class="btn-detalii" style="margin-right:0.5em;">Calculeaza statistici</button>
+  <button id="btn-reseteaza" class="btn-detalii">Reseteaza filtre</button>
+</div>
 
 <div class="lista-retete">
-  <!-- BONUS 3: Mesaj lipsă produse -->
-  <div id="mesaj-nu-exista" style="display:none; color:#b00; font-weight:bold; font-size:1.2em; margin:2em auto; text-align:center;">Nu există produse conform filtrării curente.</div>
+  <!-- BONUS 3: Mesaj lipsa produse -->
+  <div id="mesaj-nu-exista" style="display:none; color:#b00; font-weight:bold; font-size:1.2em; margin:2em auto; text-align:center;">Nu exista produse conform filtrarii curente.</div>
   <% function formatData(data) {
     if (!data) return '';
     const luni = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
-    const zile = ['Duminică','Luni','Marți','Miercuri','Joi','Vineri','Sâmbătă'];
+    const zile = ['Duminica','Luni','Marti','Miercuri','Joi','Vineri','Sambata'];
     const d = new Date(data);
     return `${d.getDate()}(${zile[d.getDay()]})/${luni[d.getMonth()]}/${d.getFullYear()}`;
   } %>
   <% retete.forEach(r => { %>
     <article class="card-reteta" data-descriere="<%= (r.descriere||'').replace(/"/g,'&quot;') %>" data-ingrediente="<%= Array.isArray(r.ingrediente) ? r.ingrediente.join('|') : '' %>" data-complexitate="<%= r.complexitate %>" data-rapida="<%= r.este_rapida ? 'da' : 'nu' %>" data-categorie="<%= r.categorie %>" data-pret="<%= r.pret %>" data-ingredient-principal="<%= Array.isArray(r.ingrediente) ? r.ingrediente[0] : '' %>">
       <h2><%= r.nume %></h2>
+      <% if (celeMaiIeftine && celeMaiIeftine[r.categorie] && celeMaiIeftine[r.categorie].id === r.id) { %>
+        <!-- BONUS 14: Cel mai ieftin produs din categorie (BONUS 14) -->
+        <div style="background:#ffe066; color:#b85c00; font-weight:bold; padding:0.4em 1em; border-radius:8px; margin-bottom:0.7em; border:2px solid #b85c00; font-size:1.1em;">
+          ⭐ Cel mai ieftin produs din categoria <%= r.categorie %>!
+        </div>
+        <!-- END BONUS 14 -->
+      <% } %>
       <div style="margin-bottom:0.5rem; color:#888; font-size:0.95em;">
         <time datetime="<%= r.data_adaugare ? r.data_adaugare.toISOString ? r.data_adaugare.toISOString().slice(0,10) : r.data_adaugare : '' %>">
           <%= formatData(r.data_adaugare) %>
         </time>
       </div>
-      <div style="display: flex; align-items: flex-start; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-        <table style="min-width: 300px; max-width: 400px;">
+      <div style="margin-bottom:1rem;">
+        <table>
           <tr>
-            <th>Data adăugare</th>
-            <th>Preț</th>
+            <th>Pret</th>
             <th>Complexitate</th>
             <th>Ingrediente</th>
-            <th>Timp preparare</th>
-            <th>Rapidă?</th>
+            <th>Timp</th>
+            <th>Rapida</th>
           </tr>
           <tr>
-            <td>
-              <time datetime="<%= r.data_adaugare ? r.data_adaugare.toISOString ? r.data_adaugare.toISOString().slice(0,10) : r.data_adaugare : '' %>">
-                <%= formatData(r.data_adaugare) %>
-              </time>
-            </td>
-            <td><%= r.pret %> lei</td>
+            <td><%= r.pret %> RON</td>
             <td><%= r.complexitate %></td>
             <td><%= Array.isArray(r.ingrediente) ? r.ingrediente.join(', ') : r.ingrediente %></td>
             <td><%= r.timp_preparare %> min</td>
@@ -142,7 +145,7 @@
 
 <!-- PAGINARE BONUS 5 -->
 <% if (nrPagini > 1) { %>
-  <nav class="paginare" aria-label="Paginare rețete">
+  <nav class="paginare" aria-label="Paginare retete">
     <% for(let i=1; i<=nrPagini; i++) { %>
       <% if(i === paginaCurenta) { %>
         <span class="pagina-curenta"><%= i %></span>
@@ -156,7 +159,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  // --- BONUS 2: Tema ---
+  // BONUS 2: Tema
   const selectTema = document.getElementById("select-tema");
   function aplicaTema(tema) {
     document.body.classList.remove("theme-light", "theme-dark", "theme-purple");
@@ -166,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
   selectTema.addEventListener("change", function() {
     aplicaTema(this.value);
   });
-  // La încărcare
+  // La incarcare
   const temaSalvata = localStorage.getItem("tema") || "light";
   aplicaTema(temaSalvata);
   selectTema.value = temaSalvata;
@@ -184,11 +187,11 @@ document.addEventListener("DOMContentLoaded", function() {
   const inputRapida = document.getElementById('filtru-rapida');
 
   function filtreaza() {
-    // 1. Cuvinte cheie (virgulă, subșiruri)
+    // 1. Cuvinte cheie (virgula, subsiruri)
     const cuvinte = textareaCuvinte.value.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
     // 2. Ingrediente bifate
     const ingredienteBifate = Array.from(checkboxDiv.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
-    // 3. Complexități selectate
+    // 3. Complexitati selectate
     const complexitati = Array.from(selectComplexitate.selectedOptions).map(opt => opt.value);
 
     // Filtre vechi
@@ -201,24 +204,24 @@ document.addEventListener("DOMContentLoaded", function() {
     let nrVizibile = 0;
     articole.forEach(art => {
       let show = true;
-      // a. Cuvinte cheie în descriere (oricare, subșir)
+      // a. Cuvinte cheie in descriere (oricare, subsir)
       if (cuvinte.length > 0) {
         const descriere = art.getAttribute('data-descriere').toLowerCase();
         if (!cuvinte.some(cuv => descriere.includes(cuv))) show = false;
       }
-      // b. Ingrediente (cel puțin una bifată)
+      // b. Ingrediente (cel putin una bifata)
       if (ingredienteBifate.length > 0) {
         const ingrediente = art.getAttribute('data-ingrediente').split('|');
         if (!ingrediente.some(ing => ingredienteBifate.includes(ing))) show = false;
       }
-      // c. Complexitate (oricare selectată)
+      // c. Complexitate (oricare selectata)
       if (complexitati.length > 0) {
         const comp = art.getAttribute('data-complexitate');
         if (!complexitati.includes(comp)) show = false;
       }
       // d. Categorie (vechi)
       if (valCategorie && art.getAttribute('data-categorie') !== valCategorie) show = false;
-      // e. Preț minim/maxim (vechi)
+      // e. Pret minim/maxim (vechi)
       const pret = parseFloat(art.getAttribute('data-pret'));
       if (!isNaN(valPretMin) && pret < valPretMin) show = false;
       if (!isNaN(valPretMax) && pret > valPretMax) show = false;
@@ -227,17 +230,17 @@ document.addEventListener("DOMContentLoaded", function() {
         const ingPrincipal = (art.getAttribute('data-ingredient-principal') || '').toLowerCase();
         if (!ingPrincipal.includes(valIngredientPrincipal)) show = false;
       }
-      // g. Rapidă (vechi)
+      // g. Rapida (vechi)
       if (valRapida && art.getAttribute('data-rapida') !== 'da') show = false;
       art.style.display = show ? '' : 'none';
       if(show) nrVizibile++;
     });
-    // --- BONUS 3: Mesaj lipsă produse ---
+    // BONUS 3: Mesaj lipsa produse
     const mesajNuExista = document.getElementById('mesaj-nu-exista');
     mesajNuExista.style.display = nrVizibile === 0 ? '' : 'none';
   }
 
-  // --- BONUS 4: Toate filtrele aplică efectul la oninput/onchange, nu doar la click pe buton ---
+  // BONUS 4: Toate filtrele aplica efectul la oninput/onchange, nu doar la click pe buton
   textareaCuvinte.addEventListener('input', filtreaza);
   checkboxDiv.addEventListener('change', filtreaza);
   selectComplexitate.addEventListener('change', filtreaza);
@@ -247,9 +250,9 @@ document.addEventListener("DOMContentLoaded", function() {
   inputIngredientPrincipal.addEventListener('input', filtreaza);
   inputRapida.addEventListener('change', filtreaza);
 
-  filtreaza(); // inițial
+  filtreaza(); // initial
 
-  // --- BUTOANE cerinta 8 ---
+  // BUTOANE cerinta 8
   const btnFiltreaza = document.getElementById('btn-filtreaza');
   const btnSortAsc = document.getElementById('btn-sort-asc');
   const btnSortDesc = document.getElementById('btn-sort-desc');
@@ -304,7 +307,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // 4. Resetare filtre
   btnReseteaza.addEventListener('click', () => {
-    if (confirm('Sigur doriți să resetați toate filtrele?')) {
+    if (confirm('Sigur doriti sa resetati toate filtrele?')) {
       // Reseteaza toate inputurile filtrelor
       textareaCuvinte.value = '';
       checkboxDiv.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = true);
@@ -314,14 +317,14 @@ document.addEventListener("DOMContentLoaded", function() {
       inputPretMax.value = inputPretMax.max;
       inputIngredientPrincipal.value = '';
       inputRapida.checked = false;
-      // Reafișează toate rețetele în ordinea inițială (resetare sortare)
-      // Reordonăm articolele după ordinea inițială din DOM
+      // Reafiseaza toate retetele in ordinea initiala (resetare sortare)
+      // Reordonam articolele dupa ordinea initiala din DOM
       const articole = Array.from(listaRetete.querySelectorAll('article.card-reteta'));
       articole.sort((a, b) => parseInt(a.getAttribute('data-id')) - parseInt(b.getAttribute('data-id')));
       articole.forEach(art => listaRetete.appendChild(art));
       filtreaza();
     }
-    // Dacă apasă Cancel, nu se face nimic
+    // Daca apasa Cancel, nu se face nimic
   });
 });
 </script>

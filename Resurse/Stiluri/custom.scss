@@ -1,7 +1,7 @@
-// Custom Bootstrap theme variables
+// Variabile tema Bootstrap personalizata
 $primary: #9B59B6;
 $secondary: #2ECC71;
-$border-radius: 1rem; // Custom border radius
+$border-radius: 1rem; // Raza border personalizata
 $font-family-sans-serif: 'Poppins', sans-serif;
 $h1-font-size: 2.8rem;
 $h2-font-size: 2.2rem;
@@ -14,14 +14,14 @@ $grid-breakpoints: (
   xl: 1200px,
   xxl: 1450px
 );
-$body-bg: #ff9800; // Default background
-$body-color: #34495E; // Default text color
-$btn-font-weight: 700; // Extra variable: bold buttons
+$body-bg: #ff9800; // Fundal implicit
+$body-color: #34495E; // Culoarea textului implicit
+$btn-font-weight: 700; // Variabila extra: butoane ingrosate
 
-// Import Bootstrap after variable overrides
+// Importa Bootstrap dupa suprascrierea variabilelor
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
-// Theme classes
+// Clase tema
 .theme-light, .theme-dark {
   min-height: 100vh;
   transition: background 0.3s, color 0.3s;
@@ -48,13 +48,13 @@ $btn-font-weight: 700; // Extra variable: bold buttons
   color: #fff !important;
 }
 
-// Always keep header/nav black with white text
+// Pastreaza intotdeauna header/nav negru cu text alb
 header, nav {
   background-color: #111 !important;
   color: #fff !important;
 }
 
-// Make sure menu buttons are visible on black
+// Asigura-te ca butoanele meniului sunt vizibile pe negru
 header .menu a, nav .menu a, header .btn-custom, nav .btn-custom {
   color: #fff !important;
   border-color: #fff !important;
@@ -64,7 +64,7 @@ header .btn-custom, nav .btn-custom {
   background-color: #9B59B6 !important;
 }
 
-// Example: Use custom variable in a Bootstrap button
+// Exemplu: Foloseste variabila personalizata intr-un buton Bootstrap
 .btn-custom {
   @extend .btn;
   background-color: $primary;
@@ -128,7 +128,7 @@ header .btn-custom, nav .btn-custom {
   text-align: center;
 }
 
-// Stil pentru tabelele din lista de rețete
+// Stil pentru tabelele din lista de retete
 .card-reteta table {
   border-collapse: collapse;
   width: 100%;
@@ -149,13 +149,13 @@ header .btn-custom, nav .btn-custom {
   color: #222;
 }
 
-// Floating label input (Bootstrap gestionează, dar poți personaliza dacă vrei)
+// Input label plutitor (Bootstrap gestioneaza, dar poti personaliza daca vrei)
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label {
   color: $primary;
 }
 
-// Toggle buttons (checkbox/radio ca butoane outline)
+// Butoane toggle (checkbox/radio ca butoane outline)
 .btn-check:checked + .btn-outline-primary {
   background-color: $primary;
   color: #fff;
@@ -167,7 +167,7 @@ header .btn-custom, nav .btn-custom {
   font-weight: $btn-font-weight;
 }
 
-// Grid pentru inputuri (Bootstrap grid, dar poți adăuga spațiere suplimentară)
+// Grid pentru inputuri (Bootstrap grid, dar poti adauga spatiere suplimentara)
 .form-row {
   @extend .row;
   margin-bottom: 1rem;
@@ -177,7 +177,7 @@ header .btn-custom, nav .btn-custom {
   margin-bottom: 0.5rem;
 }
 
-// Input range customizat
+// Input range personalizat
 $form-range-thumb-width: 1.5rem;
 $form-range-thumb-height: 1.5rem;
 $form-range-thumb-bg: $primary;
@@ -202,45 +202,57 @@ $form-range-thumb-border-radius: 50%;
   width: $form-range-thumb-width;
   height: $form-range-thumb-height;
 }
-.form-range {
-  accent-color: $primary;
+
+// Switch pentru tema (doar stil suplimentar daca vrei)
+.theme-toggle {
+  .btn-custom {
+    background-color: transparent !important;
+    border: 1px solid #fff !important;
+    color: #fff !important;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
 }
 
-// Switch pentru temă (doar stil suplimentar dacă vrei)
-.form-switch .form-check-input:checked {
-  background-color: $primary;
-  border-color: $primary;
-}
-
+// Stiluri pentru paginare
 .paginare {
-  margin: 2rem auto 1rem auto;
-  text-align: center;
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
-  a, .pagina-curenta {
-    display: inline-block;
-    min-width: 2.2em;
-    padding: 0.5em 1em;
-    border-radius: 0.5em;
-    background: #fff;
-    color: #9B59B6;
-    text-decoration: none;
-    font-weight: bold;
-    border: 1.5px solid #9B59B6;
-    transition: background 0.2s, color 0.2s;
-    margin: 0 0.1em;
-    font-size: 1.1em;
-  }
-  a:hover {
-    background: #9B59B6;
-    color: #fff;
-  }
+  margin: 2rem 0;
+  
   .pagina-curenta {
-    background: #9B59B6;
+    background-color: $primary;
     color: #fff;
-    border: 1.5px solid #9B59B6;
-    cursor: default;
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    font-weight: bold;
   }
+  
+  .pagina-link {
+    background-color: #f8f9fa;
+    color: $primary;
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    
+    &:hover {
+      background-color: $primary;
+      color: #fff;
+      border-color: $primary;
+    }
+  }
+}
+
+// Stiluri pentru mesajul "nu exista produse"
+#mesaj-nu-exista {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: $border-radius;
+  padding: 1rem;
+  text-align: center;
+  margin: 2rem 0;
 }

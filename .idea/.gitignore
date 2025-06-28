@@ -1,9 +1,9 @@
- # Default ignored files
+# Fisiere ignorate implicit
 /shelf/
 /workspace.xml
-# Editor-based HTTP Client requests
+# Cereri HTTP bazate pe editor
 /httpRequests/
-# Datasource local storage ignored files
+# Fisiere de stocare locala pentru surse de date
 /dataSources/
 /dataSources.local.xml
 node_modules

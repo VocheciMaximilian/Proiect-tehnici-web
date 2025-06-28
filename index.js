@@ -16,10 +16,10 @@ global.folderCss = path.join(__dirname, 'Resurse', 'Stiluri');
 global.folderBackup = path.join(global.folderCss, 'backup');
 
 const pool = new Pool({
-    user: 'postgres', // modifică după caz
+    user: 'postgres', // modifica dupa caz
     host: 'localhost',
     database: 'retete_db',
-    password: '1406', // modifică după caz
+    password: '1406', // modifica dupa caz
     port: 5432
 });
 
@@ -174,20 +174,20 @@ app.get(['/', '/index', '/home'], (req, res) => {
     });
 });
 
-// Ruta pentru listare rețete
+// Ruta pentru listare retete
 app.get('/retete', async (req, res) => {
     try {
         // Preluare categorii distincte pentru dropdown
         const categoriiResult = await pool.query('SELECT DISTINCT categorie FROM retete');
         const categorii = categoriiResult.rows.map(row => row.categorie);
 
-        // Filtrare și sortare
+        // Filtrare si sortare
         let query = 'SELECT id, nume, descriere, imagine, categorie, timp_preparare, complexitate, pret, data_adaugare, este_rapida, ingrediente FROM retete';
         let where = [];
         let values = [];
         let order = '';
 
-        // Filtrare după categorie
+        // Filtrare dupa categorie
         if (req.query.categorie && req.query.categorie !== '') {
             where.push('categorie = $' + (values.length + 1));
             values.push(req.query.categorie);
@@ -198,129 +198,160 @@ app.get('/retete', async (req, res) => {
         }
 
         // Sortare
-        if (req.query.sort === 'pret' || req.query.sort === 'timp_preparare' || req.query.sort === 'nume') {
-            order = ' ORDER BY ' + req.query.sort;
+        if (req.query.sort) {
+            switch (req.query.sort) {
+                case 'pret_asc':
+                    order = ' ORDER BY pret ASC';
+                    break;
+                case 'pret_desc':
+                    order = ' ORDER BY pret DESC';
+                    break;
+                case 'timp_asc':
+                    order = ' ORDER BY timp_preparare ASC';
+                    break;
+                case 'timp_desc':
+                    order = ' ORDER BY timp_preparare DESC';
+                    break;
+                case 'nume_asc':
+                    order = ' ORDER BY nume ASC';
+                    break;
+                case 'nume_desc':
+                    order = ' ORDER BY nume DESC';
+                    break;
+            }
         }
+
         query += order;
 
+        // Paginare
+        const pagina = parseInt(req.query.pagina) || 1;
+        const retetePerPagina = 6;
+        const offset = (pagina - 1) * retetePerPagina;
+
+        // Query pentru numarul total de retete
+        let countQuery = 'SELECT COUNT(*) FROM retete';
+        if (where.length > 0) {
+            countQuery += ' WHERE ' + where.join(' AND ');
+        }
+        const countResult = await pool.query(countQuery, values);
+        const totalRetete = parseInt(countResult.rows[0].count);
+        const nrPagini = Math.ceil(totalRetete / retetePerPagina);
+
+        // Query final cu paginare
+        query += ` LIMIT ${retetePerPagina} OFFSET ${offset}`;
         const result = await pool.query(query, values);
-        // Calculează pretMin și pretMax din rezultatele rețetelor
-        let pretMin = null, pretMax = null;
-        let ingredienteUnice = [];
-        if (result.rows.length > 0) {
-            const preturi = result.rows.map(r => Number(r.pret));
-            pretMin = Math.min(...preturi);
-            pretMax = Math.max(...preturi);
-            // Extrage toate ingredientele într-un array flat
-            let toateIngrediente = [];
-            result.rows.forEach(r => {
-                if (Array.isArray(r.ingrediente)) {
-                    toateIngrediente.push(...r.ingrediente);
-                } else if (typeof r.ingrediente === 'string') {
-                    toateIngrediente.push(r.ingrediente);
-                }
-            });
-            // Elimină duplicatele
-            ingredienteUnice = [...new Set(toateIngrediente)].sort();
+        const retete = result.rows;
+
+        // Calculare retetele cele mai ieftine din fiecare categorie
+        const celeMaiIeftine = {};
+        for (const categorie of categorii) {
+            const ieftinResult = await pool.query(
+                'SELECT id, pret FROM retete WHERE categorie = $1 ORDER BY pret ASC LIMIT 1',
+                [categorie]
+            );
+            if (ieftinResult.rows.length > 0) {
+                celeMaiIeftine[categorie] = ieftinResult.rows[0];
+            }
         }
 
-        // --- PAGINARE ---
-        const K = 6; // număr de rețete pe pagină
-        const pagina = parseInt(req.query.pagina) || 1;
-        const N = result.rows.length;
-        const nrPagini = Math.ceil(N / K);
-        const start = (pagina - 1) * K;
-        const end = Math.min(start + K, N);
-        const retetePagina = result.rows.slice(start, end);
-        // --- END PAGINARE ---
-
         res.render('pagini/retete', {
-            retete: retetePagina,
-            titluPagina: 'Rețete',
+            retete,
             categorii,
             categorieSelectata: req.query.categorie || '',
             sort: req.query.sort || '',
-            pretMin,
-            pretMax,
-            ingredienteUnice,
             paginaCurenta: pagina,
-            nrPagini
+            nrPagini,
+            celeMaiIeftine
         });
     } catch (err) {
-        res.status(500).send('Eroare la preluarea rețetelor');
+        console.error('Eroare la preluarea retetelor:', err);
+        afisareEroare(res, 500);
     }
 });
 
-// Ruta pentru detalii rețetă
+// Ruta pentru pagina individuala reteta
 app.get('/reteta/:id', async (req, res) => {
     try {
-        const result = await pool.query(
-            'SELECT * FROM retete WHERE id = $1', [req.params.id]
-        );
-        if (result.rows.length === 0) return res.status(404).send('Rețetă inexistentă');
-        const reteta = result.rows[0];
-        // Alege 3 imagini random din folderul Resurse/images
-        const imgDir = path.join(__dirname, 'Resurse', 'images');
-        let toateImaginile = fs.readdirSync(imgDir)
-            .filter(f => f.match(/\.(jpg|jpeg|png)$/i))
-            .map(f => 'Resurse/images/' + f);
-        // Elimină duplicate și imaginea principală dacă vrei
-        let imagini = [reteta.imagine];
-        let rest = toateImaginile.filter(img => img !== reteta.imagine);
-        while (imagini.length < 3 && rest.length > 0) {
-            let idx = Math.floor(Math.random() * rest.length);
-            imagini.push(rest[idx]);
-            rest.splice(idx, 1);
+        const result = await pool.query('SELECT * FROM retete WHERE id = $1', [req.params.id]);
+        if (result.rows.length === 0) {
+            return afisareEroare(res, 404);
         }
-        res.render('pagini/reteta', { reteta, imagini, titluPagina: reteta.nume });
+        res.render('pagini/reteta', { reteta: result.rows[0] });
     } catch (err) {
-        res.status(500).send('Eroare la preluarea rețetei');
+        console.error('Eroare la preluarea retetei:', err);
+        afisareEroare(res, 500);
     }
 });
 
-// Rute dinamice pentru orice pagina
-app.get('/*', (req, res) => {
-    const page = req.path.slice(1);
-    res.render(`pagini/${page}`, { ip: req.ip }, (err, html) => {
-        if (err) {
-            if (err.message.startsWith('Failed to lookup view')) {
-                return afisareEroare(res, 404);
-            }
-            return afisareEroare(res);
-        }
-        res.send(html);
-    });
+// Ruta pentru pagina despre
+app.get('/despre', (req, res) => {
+    res.render('pagini/despre');
 });
 
-// Functie afisare eroare
+// Ruta pentru fragmentul orar
+app.get('/fragmente/orar', (req, res) => {
+    res.render('fragmente/orar');
+});
+
+// Ruta pentru pagina video-vtt
+app.get('/video-vtt', (req, res) => {
+    res.render('pagini/video-vtt');
+});
+
+// Ruta pentru erori 404
+app.use((req, res) => {
+    afisareEroare(res, 404);
+});
+
+// Functie pentru afisarea erorilor
 function afisareEroare(res, identificator = 0, titluArg, textArg, imgArg) {
-    const conf = obGlobal.obErori;
-    let e = conf.info[identificator];
-    let statusCode = 200;
-    let titlu, text, imagine;
-
-    if (!e) {
-        e = conf.default;
+    let titlu, text, img;
+    
+    if (identificator === 0) {
+        // Eroare default
+        titlu = obGlobal.obErori.default.titlu;
+        text = obGlobal.obErori.default.text;
+        img = obGlobal.obErori.default.imagine;
+    } else {
+        // Eroare specifica
+        const eroare = obGlobal.obErori.info[identificator];
+        if (eroare) {
+            titlu = titluArg || eroare.titlu;
+            text = textArg || eroare.text;
+            img = imgArg || eroare.imagine;
+        } else {
+            // Eroare necunoscuta
+            titlu = titluArg || 'Eroare necunoscuta';
+            text = textArg || 'A aparut o eroare neasteptata.';
+            img = imgArg || obGlobal.obErori.default.imagine;
+        }
     }
-    if (identificator && e) {
-        statusCode = e.status ? identificator : 200;
-    }
-    titlu = titluArg || e.titlu;
-    text = textArg || e.text;
-    imagine = imgArg || e.imagine;
-
-    res.status(statusCode).render('pagini/error', {
+    
+    res.status(identificator || 500).render('pagini/error', {
         titlu,
         text,
-        imagine
+        imagine: img
     });
 }
 
-app.listen(PORT, () => {
-    initialCompileScss();
-    setupScssWatcher();
-    console.log(`Serverul rulează pe http://localhost:${PORT}`);
-    console.log('__dirname:', __dirname);
-    console.log('__filename:', __filename);
-    console.log('process.cwd():', process.cwd());
-});
+// Initializare si pornire server
+async function startServer() {
+    try {
+        // Compilare initiala SCSS
+        await initialCompileScss();
+        
+        // Setup watcher pentru SCSS
+        setupScssWatcher();
+        
+        // Pornire server
+        app.listen(PORT, () => {
+            console.log(`Serverul ruleaza pe portul ${PORT}`);
+            console.log(`Acceseaza: http://localhost:${PORT}`);
+        });
+    } catch (err) {
+        console.error('Eroare la pornirea serverului:', err);
+        process.exit(1);
+    }
+}
+
+startServer();

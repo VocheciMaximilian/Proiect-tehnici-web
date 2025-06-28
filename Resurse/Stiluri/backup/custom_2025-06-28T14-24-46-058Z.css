@@ -12045,11 +12045,47 @@ header .btn-custom, nav .btn-custom {
   height: 1.5rem;
 }
 
-.form-range {
-  accent-color: #9B59B6;
+.theme-toggle .btn-custom {
+  background-color: transparent !important;
+  border: 1px solid #fff !important;
+  color: #fff !important;
+}
+.theme-toggle .btn-custom:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-.form-switch .form-check-input:checked {
+.paginare {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+}
+.paginare .pagina-curenta {
   background-color: #9B59B6;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-weight: bold;
+}
+.paginare .pagina-link {
+  background-color: #f8f9fa;
+  color: #9B59B6;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  text-decoration: none;
+  border: 1px solid #dee2e6;
+}
+.paginare .pagina-link:hover {
+  background-color: #9B59B6;
+  color: #fff;
   border-color: #9B59B6;
+}
+
+#mesaj-nu-exista {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  margin: 2rem 0;
 }

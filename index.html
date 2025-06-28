@@ -56,7 +56,7 @@
                 </li>
                 <li><a href="#populare">Retete Populare</a></li>
                 <li><a href="#rapide">Retete Rapide</a></li>
-                <li><a href="#autentificare">Autentificare / Înregistrare</a></li>
+                <li><a href="#autentificare">Autentificare / Inregistrare</a></li>
                 <!-- Submeniu: Informatii -->
                 <li class="has-submenu">
                     <a href="#">Informatii</a>
@@ -211,40 +211,14 @@
     <section id="zona3">
         <h2>Calendar Evenimente</h2>
         <table>
-            <caption>Aprilie - Mai (Evenimente)</caption>
-            <thead>
-            <tr>
-                <th>Luna</th>
-                <th>Data</th>
-                <th>Eveniment</th>
-            </tr>
-            </thead>
+            <caption>Aprilie – Mai (Evenimente)</caption>
+            <thead><tr><th>Luna</th><th>Data</th><th>Eveniment</th></tr></thead>
             <tbody>
-            <tr>
-                <td>Aprilie</td>
-                <td>21</td>
-                <td>Floriile</td>
-            </tr>
-            <tr>
-                <td>Aprilie</td>
-                <td>28</td>
-                <td>Vinerea Mare</td>
-            </tr>
-            <tr>
-                <td>Aprilie</td>
-                <td>29</td>
-                <td>Sambata Mare</td>
-            </tr>
-            <tr>
-                <td>Aprilie</td>
-                <td>30</td>
-                <td>Paste Ortodox</td>
-            </tr>
-            <tr>
-                <td>Mai</td>
-                <td>01</td>
-                <td>A doua zi de Paste</td>
-            </tr>
+            <tr><td>Aprilie</td><td>21</td><td>Floriile</td></tr>
+            <tr><td>Aprilie</td><td>28</td><td>Vinerea Mare</td></tr>
+            <tr><td>Aprilie</td><td>29</td><td>Sambata Mare</td></tr>
+            <tr><td>Aprilie</td><td>30</td><td>Paste Ortodox</td></tr>
+            <tr><td>Mai</td><td>01</td><td>A doua zi de Paste</td></tr>
             </tbody>
         </table>
     </section>
@@ -264,7 +238,7 @@
     <!-- ZONA 6: Date despre utilizator si statistici -->
     <section id="zona6">
         <h2>Date despre utilizator si statistici</h2>
-        <p>Aici sunt afisate cateva date si statistici despre utilizatori si activitatea site-ului.</p>
+        <p>IP-ul tau: <span id="ip-utilizator">192.168.1.1</span></p>
     </section>
 
     <!-- ZONA 7: Date despre site si server -->
@@ -298,7 +272,7 @@
 
         <!-- #autentificare -->
         <section id="autentificare">
-            <h3>Autentificare / Înregistrare</h3>
+            <h3>Autentificare / Inregistrare</h3>
             <p>Conecteaza-te pentru a beneficia de toate functionalitatile site-ului.</p>
         </section>
 
@@ -313,44 +287,28 @@
         <!-- #contact -->
         <section id="contact">
             <h3>Contact</h3>
-            <p>Pentru intrebari, sugestii sau probleme, ne puteti contacta prin urmatoarele metode:</p>
-            <address>
-                Telefon: <a href="tel:+40123456789">+40 123 456 789</a><br>
-                E-mail: <a href="mailto:maximilian.vocheci@s.unibuc.ro">maximilian.vocheci@s.unibuc.ro</a><br>
-                Chat: <a href="https://wa.me/40123456789">WhatsApp</a>
-            </address>
-            <h3>Locatie:</h3>
-            <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.290121271078!2d26.09621507683869!3d44.435671773914785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff3327c030d1%3A0xcca921f5e92bcd84!2sBulevardul%20Regina%20Elisabeta%204-12%2C%20Bucuresti%20030018!5e0!3m2!1sro!2sro!4v1697028765432!5m2!1sro!2sro"
-                    allowfullscreen>
-            </iframe>
+            <p>Pentru orice intrebari sau sugestii, ne puteti contacta la:</p>
+            <ul>
+                <li>Email: contact@gateala.com.ro</li>
+                <li>Telefon: +40 123 456 789</li>
+                <li>Adresa: Strada Exemplu, Nr. 123, Bucuresti</li>
+            </ul>
         </section>
     </section>
 </main>
 
 <!-- Footer -->
 <footer>
-    <p class="banner-print">Acesta este un proiect scolar!</p>
-    <small>&copy; 2025 Găteală. Toate drepturile rezervate.</small>
+    <p>&copy; 2024 Găteală.com.ro - Toate drepturile rezervate.</p>
+    <p>Proiect realizat pentru materia Tehnici Web.</p>
 </footer>
 
 <!-- Buton "Back to Top" -->
-<a href="#top" class="btn-top" data-tooltip="Inceputul paginii">
-    <div class="diamond">
-        <div class="triangle"></div>
-    </div>
-</a>
+<button id="back-to-top" title="Inapoi sus">
+    <i class="fa fa-arrow-up"></i>
+</button>
 
 <!-- pentru hamburger -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const trigger = document.querySelector('.menu-trigger');
-        const menu = document.querySelector('.menu');
-        trigger.addEventListener('click', function () {
-            menu.classList.toggle('active');
-        });
-    });
-</script>
-
+<script src="index.js"></script>
 </body>
 </html>
